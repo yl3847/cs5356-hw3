@@ -1,11 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>My Personal Homepage</title>
+  <meta charset="utf-8" />
+  <title>My Personal Homepage</title>
+  <!-- Open Graph tags for link previews -->
+  <meta property="og:title" content="My Personal Homepage" />
+  <meta property="og:description" content="I'm Yize Lu, a front-end developer in training" />
+  <meta property="og:image" content="https://github.com/yl3847/cs5356-hw3/images/myphoto.jpg" />
+  <meta property="og:url" content="https://github.com/yl3847/cs5356-hw3" />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=6462965918"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '6462965918');
+  </script>
 </head>
 <body>
+<!-- ===== SIDEBAR (collapsible) ===== -->
+  <aside id="sidebar" class="expanded">
+    <div class="sidebar-content">
+      <button id="toggleSidebarBtn" class="fold-btn">⏴</button>
+      <nav>
+        <ul>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#random-dog">Random Dog</a></li>
+          <li><a href="#photography">Photography</a></li>
+        </ul>
+      </nav>
+
+      <!-- Color Picker at bottom of sidebar -->
+      <div class="color-picker-section">
+        <label for="colorPicker">Base Hue:</label>
+        <input type="color" id="colorPicker" value="#ff0000">
+      </div>
+    </div>
+    <!-- This appears only when sidebar is collapsed -->
+    <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
+  </aside>
+
+
+
+  <!-- ===== MAIN PAGE CONTENT ===== -->
+  <header>
     <h1>Welcome to My Personal Homepage</h1>
-    <p>Hello world! This is my first GitHub Pages site.</p>
+  </header>
+
+  <main>
+    <!-- About Me section -->
+    <section id="about">
+      <figure>
+        <img src="./images/myphoto.jpg" alt="My photo" />
+        <figcaption>Me, in Lugu Lake, Yunnan, China, in Feb, 2024</figcaption>
+      </figure>
+      <article>
+        <h2>About Me</h2>
+        <p>Hello! I'm Yize Lu, a front-end developer in training...</p>
+      </article>
+
+      <details>
+        <summary>Click to see a hidden message</summary>
+        <p>“I learned that details lets me show or hide content by default. 
+          When the user clicks the summary, it toggles whether the hidden content 
+          is displayed. It’s great for FAQs, code snippets, or any additional text 
+          that you don’t want to clutter the page.”
+        </p>
+      </details>
+
+      <!-- Example of a new HTML element: <dialog> -->
+      <dialog id="cityDialog">
+        <p>This is an example of the <dialog> element!</p>
+        <button id="closeDialogBtn">Close</button>
+      </dialog>
+    </section>
+
+    <!-- Random Dog section -->
+    <section id="random-dog">
+      <h2>Random Dog Image</h2>
+      <img id="dogImage" src="" alt="A random dog will appear here!" />
+      <button id="getDogBtn">Get Random Dog Image</button>
+    </section>
+
+    <!-- Photography Album section -->
+    <section id="photography">
+      <h2>My Photography Albums</h2>
+      <!-- Toggle between single-row and grid -->
+      <button id="toggleGalleryBtn">Show all My Photos</button>
+      
+      <!-- Container for the photo thumbnails; default is single-row view -->
+      <div id="photoGallery" class="photo-gallery single-row">
+        <!-- We will inject <img> elements via JS, or you can also put them in HTML if you prefer -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Yize. All rights reserved.</p>
+  </footer>
+
+  <!-- ===== LIGHTBOX OVERLAY ===== -->
+  <div id="lightbox" class="hidden">
+    <div class="lightbox-content">
+      <span id="lightboxClose" class="lightbox-close">×</span>
+      <img id="lightboxImg" src="" alt="Full-size preview" />
+    </div>
+  </div>
+
+  <!-- Main JS -->
+  <script src="script.js"></script>
 </body>
 </html>
+
