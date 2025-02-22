@@ -101,15 +101,54 @@
 
   <footer>
     <p>© 2025 Yize. All rights reserved.</p>
+    
+    <div class="footer-links">
+      <!-- Bilibili link -->
+      <a 
+        href="https://space.bilibili.com/421928912?spm_id_from=333.1007.0.0"
+        target="_blank"
+        class="footer-icon-link"
+      >
+        <img 
+          src="./images/bilibili-logo-white.png" 
+          alt="Bilibili" 
+          class="footer-icon"
+        />
+        <span>Bilibili</span>
+      </a>
+  
+      <!-- RedNote link -->
+      <a
+        href="https://www.xiaohongshu.com/user/profile/60fd66b5000000000100a2bf"
+        target="_blank"
+        class="footer-icon-link"
+      >
+        <img
+          src="./images/rednote-logo-white.png"
+          alt="RedNote"
+          class="footer-icon"
+        />
+        <span>RedNote</span>
+      </a>
+    </div>
   </footer>
+  
 
   <!-- ===== LIGHTBOX OVERLAY ===== -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
+      <!-- Close button (X) -->
       <span id="lightboxClose" class="lightbox-close">×</span>
+      
+      <!-- The main displayed image -->
       <img id="lightboxImg" src="" alt="Full-size preview" />
+      
+      <!-- Left/right arrows to cycle photos -->
+      <span id="lightboxPrev" class="lightbox-arrow left">⟨</span>
+      <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>
   </div>
+  
 
   <!-- Main JS -->
   <script src="script.js"></script>
