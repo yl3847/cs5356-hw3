@@ -164,10 +164,8 @@ menuBtn.addEventListener("click", () => {
       sidebar.classList.remove("collapsed");
       sidebar.classList.add("expanded");
     }
-    // Only blur to remove focus (letting CSS handle hover/active)
     menuBtn.blur();
-  });
-  
+});
 
 // On smartphone: fold sidebar by swiping left
 let sideStartX = 0;

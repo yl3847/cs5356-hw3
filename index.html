@@ -30,6 +30,7 @@
       <nav>
         <ul>
           <li><a href="#about">About Me</a></li>
+          <li><a href="#project-experience">My Project Experience</a></li>
           <li><a href="#random-dog">Random Dog</a></li>
           <li><a href="#photography">Photography</a></li>
         </ul>
@@ -57,6 +58,9 @@
       <article>
         <h2>About Me</h2>
         <p>Hello! I'm Yize Lu, a front-end developer in training.</p>
+        <p>
+          I am currently pursuing a Master of Information Science at Cornell University with a focus on Machine Learning and Natural Language Processing. With hands-on experience in both front-end and back-end development, I enjoy tackling real-world challenges through innovative projects.
+        </p>
       </article>
       <details>
         <summary>Click to see a hidden message</summary>
@@ -72,9 +76,47 @@
       </dialog>
     </section>
 
+    <!-- My Project Experience -->
+    <section id="project-experience">
+      <h2>My Project Experience</h2>
+      <article>
+        <h3>Natural Language Processing Project: Sentiment Analysis & Text Classification</h3>
+        <p><strong>Cornell University NLP Project, NYC</strong> | Feb 2025 - Mar 2025</p>
+        <ul>
+          <li>Developed and implemented a Perceptron model and Multilayer Perceptron (MLP) for text classification tasks, specifically Sentiment Analysis (SST-2) and Newsgroup Classification.</li>
+          <li>Preprocessed data and engineered features using Bag of Words (BoW), n-grams, and custom features (negation, intensifiers).</li>
+          <li>Implemented Perceptron from scratch, utilizing a linear classification approach with feature-based weight updates.</li>
+          <li>Designed and trained an MLP model using PyTorch, including embedding layers, hidden layers with various activation functions (ReLU, Sigmoid, Tanh, Leaky-ReLU), and dropout for regularization.</li>
+          <li>Optimized model performance through hyperparameter tuning, batching, and margin-based updates.</li>
+          <li>Conducted error analysis to identify and address model misclassifications, focusing on issues like negation, sarcasm, and ambiguous context. Benchmarked model performance with different batch sizes.</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Sentiment Analysis with Semi-Supervised Learning on Text Data</h3>
+        <p><strong>Cornell University Machine Learning Project, NYC</strong> | Oct 2024 - Nov 2024</p>
+        <ul>
+          <li>Implemented advanced semi-supervised learning techniques (DBSCAN, Label Spreading, and Self-Training) to augment 60% unlabeled data, increasing model training data volume by 2.5x.</li>
+          <li>Designed and compared supervised classifiers (MultinomialNB, SGDClassifier, Random Forest, XGBoost, LightGBM) to achieve a test accuracy of 95.4% using a Voting Classifier ensemble model.</li>
+          <li>Utilized TF-IDF vectorization with n-grams and optimized data dimensionality (top 5000 features) to capture rich textual context while reducing overfitting risk.</li>
+          <li>Applied clustering methods (DBSCAN, K-Means, Gaussian Mixture Models) with Python libraries like scikit-learn and NLTK, achieving the best performance with DBSCAN for labeling noisy and high-dimensional text data.</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Analyzing the Impact of Air Quality on Health Outcomes Using Machine Learning</h3>
+        <p><strong>Zhejiang University Design and Research Institute, Urban Science and Analytic Intern, Hangzhou, China</strong> | June 2022 - Aug 2022</p>
+        
+        <ul>
+          <li>Integrated multi-source datasets (O3, PM2.5, COPD, Asthma, Household Income) for 10 years, conducted feature engineering and outlier detection using z-scores, ensuring clean, high-quality inputs for downstream analysis. Normalized data with StandardScaler for clustering and regression tasks.</li>
+          <li>Applied K-Means and HDBSCAN clustering algorithms to identify patterns in air pollution and respiratory health outcomes, reducing feature dimensions with PCA for effective visualization.</li>
+          <li>Performed SHAP analysis to interpret model outputs, revealing that PM2.5 was the dominant predictor for asthma rates while household income exhibited a mitigating effect.</li>
+        </ul>
+      </article>
+    </section>
+
     <!-- Random Dog -->
     <section id="random-dog">
       <h2>Random Dog Image</h2>
+      <p>When life gets ruff, take a break and enjoy some awesome dog photos – because I really love dogs!</p>
       <img id="dogImage" src="" alt="A random dog will appear here!" />
       <button id="getDogBtn">Get Random Dog Image</button>
     </section>
@@ -82,6 +124,9 @@
     <!-- Photography -->
     <section id="photography">
       <h2>My Photography Albums</h2>
+      <p>
+        I have a passion for photography in New York City and across the US and China. My filming equipment includes a DJI Air3 drone and a Xiaomi 13 Ultra phone with a Leica Vario-Summicron camera. Welcome to follow my RedNote, Bilibili, and Instagram accounts where I’ll post videos and photos!
+      </p>
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
         <div class="switch-container">
