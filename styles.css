@@ -1,14 +1,12 @@
-/* ===== Global ===== */
+/* ===== GLOBAL ===== */
 * {
     box-sizing: border-box;
   }
-  
   html, body {
     margin: 0;
     padding: 0;
     height: 100%;
   }
-  
   body {
     background-color: red;
     font-family: Arial, Helvetica, sans-serif;
@@ -18,27 +16,25 @@
     flex-direction: column;
     transition: background-color 0.2s ease;
   }
-  
-  /* Ensure main can push the footer down */
+  /* Let main push the footer to bottom */
   main {
     flex: 1;
-    margin-top: 70px; /* So content doesn't hide under the fixed header (desktop) */
+    margin-top: 70px; /* desktop offset for fixed header */
   }
   
   /* ===== SIDEBAR ===== */
   #sidebar {
     position: fixed;
-    top: 0;
+    top: 0; 
     left: 0;
     height: 100%;
-    width: 260px; 
+    width: 260px;
     background-color: #000;
     color: #fff;
     overflow: hidden;
     transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 1500; /* below header by default on desktop */
+    z-index: 1500; /* below the header on desktop by default */
   }
-  
   #sidebar.expanded {
     width: 260px;
     transform: translateX(0);
@@ -47,15 +43,12 @@
     width: 40px;
     transform: translateX(0);
   }
-  
-  /* The .sidebar-content with nav, color picker, etc. */
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: 1rem;
   }
-  
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -72,20 +65,14 @@
   nav a:hover {
     text-decoration: underline;
   }
-  
   .color-picker-section {
-    margin-top: auto; 
+    margin-top: auto;
     border-top: 1px solid #444;
     padding-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-  }
-  .color-picker-section input[type="color"] {
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
   }
   
   /* ===== HEADER (FIXED) ===== */
@@ -94,17 +81,15 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px;
+    height: 70px; /* desktop header height */
     background-color: #555;
     color: #fff;
     display: flex;
     align-items: center;
-    z-index: 2000; 
     padding: 0 1rem;
     box-sizing: border-box;
+    z-index: 2000;
   }
-  
-  /* The menu button on the left side of the header */
   .menu-btn {
     background: transparent;
     color: #fff;
@@ -113,13 +98,11 @@
     cursor: pointer;
     margin-right: 1rem;
   }
-  
   header h1 {
     margin: 0 auto;
     text-align: center;
     max-width: 90%;
     overflow-wrap: break-word;
-    /* (2) On mobile, we will reduce font size to avoid overflow. */
   }
   
   /* ===== FOOTER ===== */
@@ -130,7 +113,6 @@
     padding: 1rem;
     margin-top: 2rem;
   }
-  
   .footer-links {
     display: flex;
     justify-content: center;
@@ -159,7 +141,7 @@
     padding: 1.5rem;
     margin: 0 1rem 2rem 1rem;
     border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
   figure {
     margin: 0 0 1rem 0;
@@ -199,7 +181,7 @@
     object-fit: cover;
   }
   
-  /* ===== Buttons ===== */
+  /* ===== BUTTONS ===== */
   button {
     background-color: #0275d8;
     color: #fff;
@@ -218,20 +200,17 @@
   }
   
   /* ===== GRID MODE SWITCH ===== */
-  /* (1) Let them appear side by side with a small gap. */
   .grid-mode-row {
+    /* Force them on the same line */
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin: 0.5rem 0;
   }
-  
   .grid-mode-label {
     font-weight: bold;
-    /* no special styling needed, just label text */
+    margin: 0; /* ensure no extra line break */
   }
-  
-  /* The switch itself */
   .switch-container {
     position: relative;
     width: 48px;
@@ -246,11 +225,12 @@
     cursor: pointer;
     background: #ccc;
     border-radius: 24px;
-    display: block;
+    display: inline-block; /* inline-block so it doesn't drop below the label */
     width: 100%;
     height: 100%;
     position: relative;
     transition: background 0.3s;
+    /* removed text-indent since there's no text to hide */
   }
   .switch-label::after {
     content: "";
@@ -313,12 +293,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3000; 
+    z-index: 3000;
   }
   #lightbox.hidden {
     display: none;
   }
-  
   .lightbox-content {
     position: relative;
     display: flex;
@@ -367,8 +346,7 @@
     right: -50px;
   }
   
-  /* ===== Desktop-Only Rules (≥ 601px) ===== */
-  /* The sidebar pushes content by margin-left on desktop. */
+  /* ===== DESKTOP (≥601px) ===== */
   @media (min-width: 601px) {
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
@@ -382,34 +360,33 @@
     }
   }
   
-  /* ===== Mobile-Only Rules (≤ 600px) ===== */
+  /* ===== SMARTPHONE (≤600px) ===== */
   @media (max-width: 600px) {
-    /* (2) Reduce header font-size to avoid overflow */
+    /* (2) Lower font-size so it doesn't overflow */
     header h1 {
-      font-size: 1rem; 
+      font-size: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-  
-    /* Make the header smaller in height */
+    /* shorter header height */
     header {
       height: 50px;
+      z-index: 9999; /* ensure the header is above the sidebar so we can press menuBtn */
     }
-    /* Then offset main a bit less so it doesn't hide under header. */
+    /* push main content so it doesn't hide behind the 50px header */
     main {
       margin-top: 50px;
     }
   
     /* 
-      (3) We want the sidebar to float ON TOP of the header
-          so let's give it a higher z-index than the header 
-          and also ensure it starts at top:0 
-          (thus covering that area instead of being behind it).
+       Let the sidebar be narrower, 
+       and push it below the header (top:50px) so its first row isn't hidden.
     */
     #sidebar {
-      z-index: 3000; 
-      width: 160px; /* (4) narrower width on mobile to remove extra gap */
+      top: 50px;
+      width: 120px; /* narrower so no big gap */
+      z-index: 2000; /* below header */
       transform: translateX(-100%);
     }
     #sidebar.expanded {
@@ -419,9 +396,9 @@
       transform: translateX(-100%);
     }
   
-    /* 
-      Because the sidebar is overlaying, 
-      do NOT margin-left the header/main on phone. 
+    /*
+      Do not shift main/ header / footer horizontally on phone:
+      margin-left:0
     */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
@@ -432,7 +409,7 @@
       margin-left: 0 !important;
     }
   
-    /* Move the lightbox arrows closer so they don't go off-screen. */
+    /* Move lightbox arrows a bit closer for small screens */
     .lightbox-arrow.left {
       left: -30px;
     }

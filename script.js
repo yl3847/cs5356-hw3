@@ -47,13 +47,14 @@ photoURLs.forEach((url, index) => {
   const img = document.createElement("img");
   img.src = url;
   img.alt = `Photo ${index + 1}`;
+  // open lightbox on click
   img.addEventListener("click", () => {
     openLightbox(index);
   });
   photoGallery.appendChild(img);
 });
 
-// Default single-row
+// default layout = single-row
 photoGallery.classList.add("single-row");
 let isGridView = false;
 
@@ -99,18 +100,16 @@ function showNextPhoto() {
 lightboxPrev.addEventListener("click", showPrevPhoto);
 lightboxNext.addEventListener("click", showNextPhoto);
 
-// Keyboard nav
+// Keyboard arrow nav in lightbox
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("hidden")) {
     if (e.key === "ArrowLeft") showPrevPhoto();
-    if (e.key === "ArrowRight") showNextPhoto();
+    else if (e.key === "ArrowRight") showNextPhoto();
   }
 });
 
-// Touch swipe on mobile
-let touchStartX = 0;
-let touchEndX = 0;
-
+// Touch swipe in lightbox
+let touchStartX = 0, touchEndX = 0;
 lightbox.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].clientX;
 });
@@ -118,19 +117,14 @@ lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
   if (Math.abs(diff) > 50) {
-    if (diff < 0) {
-      // Swiped left => next photo
-      showNextPhoto();
-    } else {
-      // Swiped right => prev photo
-      showPrevPhoto();
-    }
+    if (diff < 0) showNextPhoto(); // swiped left
+    else showPrevPhoto();          // swiped right
   }
 });
 
 
 /********************************************************
- *  4) COLLAPSIBLE SIDEBAR with single "menuBtn" 
+ *  4) COLLAPSIBLE SIDEBAR (MENU BUTTON)
  ********************************************************/
 const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
@@ -142,6 +136,31 @@ menuBtn.addEventListener("click", () => {
   } else {
     sidebar.classList.remove("collapsed");
     sidebar.classList.add("expanded");
+  }
+});
+
+/* (4) On smartphone: fold sidebar by swiping left.
+   We'll detect a left swipe *only if* it's currently expanded. */
+
+let sideStartX = 0;
+let sideEndX = 0;
+
+sidebar.addEventListener("touchstart", (e) => {
+  // Only consider if sidebar is expanded
+  if (sidebar.classList.contains("expanded")) {
+    sideStartX = e.changedTouches[0].clientX;
+  }
+});
+sidebar.addEventListener("touchend", (e) => {
+  if (!sidebar.classList.contains("expanded")) return;
+  
+  sideEndX = e.changedTouches[0].clientX;
+  const diff = sideEndX - sideStartX;
+
+  // If user swiped left enough (negative diff < -40):
+  if (diff < -40) {
+    sidebar.classList.remove("expanded");
+    sidebar.classList.add("collapsed");
   }
 });
 
@@ -158,8 +177,7 @@ function hexToHSL(hex) {
   const g = parseInt(hex.slice(2, 4), 16) / 255;
   const b = parseInt(hex.slice(4, 6), 16) / 255;
 
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
   let h, s, l = (max + min) / 2;
 
   if (max === min) {
@@ -186,7 +204,8 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
-colorPicker.dispatchEvent(new Event("input")); // init
+// init
+colorPicker.dispatchEvent(new Event("input"));
 
 document.addEventListener("mousemove", (event) => {
   const x = event.clientX;

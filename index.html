@@ -6,7 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Open Graph tags for link previews -->
+  <!-- Open Graph tags -->
   <meta property="og:title" content="My Personal Homepage" />
   <meta property="og:description" content="I'm Yize Lu, a front-end developer in training" />
   <meta property="og:image" content="https://github.com/yl3847/cs5356-hw3/images/myphoto.jpg" />
@@ -24,7 +24,6 @@
     gtag('config', '6462965918');
   </script>
 </head>
-
 <body>
   <!-- SIDEBAR -->
   <aside id="sidebar" class="expanded">
@@ -84,12 +83,14 @@
     <!-- Photography -->
     <section id="photography">
       <h2>My Photography Albums</h2>
+
       <!-- 
-        1) Place "Grid Mode" label + the switch in the same row 
-           using a container with .grid-mode-row or similar.
+         A row container for "Grid Mode" text and the switch.
+         Ensures they're horizontally aligned (平行的).
       -->
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
+        
         <div class="switch-container">
           <input type="checkbox" id="galleryToggle" />
           <label for="galleryToggle" class="switch-label"></label>
@@ -140,7 +141,6 @@
     </div>
   </div>
 
-  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>
