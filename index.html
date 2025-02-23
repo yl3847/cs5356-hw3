@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>My Personal Homepage</title>
 
-  <!-- 1) Add the viewport meta for mobile responsiveness -->
+  <!-- Viewport for mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Open Graph tags for link previews -->
@@ -25,11 +25,19 @@
     gtag('config', '6462965918');
   </script>
 </head>
+
 <body>
   <!-- ===== SIDEBAR (collapsible) ===== -->
+  <!-- For desktop, it pushes content. For mobile, it overlays. -->
   <aside id="sidebar" class="expanded">
     <div class="sidebar-content">
-      <!-- (Removed the old toggleSidebarBtn here) -->
+      <!-- You can remove or comment out the old fold/unfold buttons
+           because we now have a single “menu” button in the header. 
+           Keeping them hidden if you want, or remove them entirely. -->
+      <!--
+      <button id="toggleSidebarBtn" class="fold-btn">⏴</button>
+      <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
+      -->
       <nav>
         <ul>
           <li><a href="#about">About Me</a></li>
@@ -41,23 +49,19 @@
       <!-- Color Picker at bottom of sidebar -->
       <div class="color-picker-section">
         <label for="colorPicker">Base Hue:</label>
-        <input type="color" id="colorPicker" value="#ff0000">
+        <input type="color" id="colorPicker" value="#ff0000" />
       </div>
     </div>
-    <!-- Unfold button is still here for desktop usage if needed -->
-    <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
   </aside>
 
   <!-- ===== FIXED HEADER ===== -->
   <header>
-    <!-- 1) Menu button on the left side -->
-    <button id="toggleSidebarBtn" class="menu-button">☰</button>
-
-    <!-- 2) Header text in the center -->
+    <!-- Menu Button on the left side -->
+    <button id="menuBtn" class="menu-btn">☰</button>
     <h1>Welcome to Yize Lu's Homepage</h1>
   </header>
 
-  <!-- ===== MAIN PAGE CONTENT ===== -->
+  <!-- ===== MAIN CONTENT ===== -->
   <main>
     <!-- About Me section -->
     <section id="about">
@@ -72,9 +76,9 @@
 
       <details>
         <summary>Click to see a hidden message</summary>
-        <p>“I learned that details lets me show or hide content by default. 
-          When the user clicks the summary, it toggles whether the hidden content 
-          is displayed. It’s great for FAQs, code snippets, or any additional text 
+        <p>“I learned that details lets me show or hide content by default.
+          When the user clicks the summary, it toggles whether the hidden content
+          is displayed. It’s great for FAQs, code snippets, or any additional text
           that you don’t want to clutter the page.”
         </p>
       </details>
@@ -96,38 +100,39 @@
     <!-- Photography Album section -->
     <section id="photography">
       <h2>My Photography Albums</h2>
-      
-      <!-- Switch for grid vs. single-row (checkbox visually hidden) -->
-      <div class="switch-container">
-        <input type="checkbox" id="galleryToggle" />
-        <label for="galleryToggle" class="switch-label">Grid View</label>
+
+      <!-- Switch labeled "Grid Mode" -->
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <label for="galleryToggle" style="font-weight: bold;">Grid Mode</label>
+        <div class="switch-container">
+          <input type="checkbox" id="galleryToggle" />
+          <label for="galleryToggle" class="switch-label"></label>
+        </div>
       </div>
 
       <!-- Container for the photo thumbnails; default is single-row view -->
-      <div id="photoGallery" class="photo-gallery single-row">
-        <!-- Photo <img> elements added by JavaScript -->
-      </div>
+      <div id="photoGallery" class="photo-gallery single-row"></div>
     </section>
   </main>
 
   <footer>
     <p>© 2025 Yize. All rights reserved.</p>
-    
+
     <div class="footer-links">
       <!-- Bilibili link -->
-      <a 
+      <a
         href="https://space.bilibili.com/421928912?spm_id_from=333.1007.0.0"
         target="_blank"
         class="footer-icon-link"
       >
-        <img 
-          src="./images/bilibili-logo-white.png" 
-          alt="Bilibili" 
+        <img
+          src="./images/bilibili-logo-white.png"
+          alt="Bilibili"
           class="footer-icon"
         />
         <span>Bilibili</span>
       </a>
-  
+
       <!-- RedNote link -->
       <a
         href="https://www.xiaohongshu.com/user/profile/60fd66b5000000000100a2bf"
@@ -143,22 +148,20 @@
       </a>
     </div>
   </footer>
-  
+
   <!-- ===== LIGHTBOX OVERLAY ===== -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
       <!-- Close button (X) -->
       <span id="lightboxClose" class="lightbox-close">×</span>
-      
       <!-- The main displayed image -->
       <img id="lightboxImg" src="" alt="Full-size preview" />
-      
       <!-- Left/right arrows to cycle photos -->
       <span id="lightboxPrev" class="lightbox-arrow left">⟨</span>
       <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>
   </div>
-  
+
   <!-- Main JS -->
   <script src="script.js"></script>
 </body>
