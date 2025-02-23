@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <title>My Personal Homepage</title>
 
-  <!-- Viewport for mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Open Graph tags for link previews -->
@@ -27,17 +26,9 @@
 </head>
 
 <body>
-  <!-- ===== SIDEBAR (collapsible) ===== -->
-  <!-- For desktop, it pushes content. For mobile, it overlays. -->
+  <!-- SIDEBAR -->
   <aside id="sidebar" class="expanded">
     <div class="sidebar-content">
-      <!-- You can remove or comment out the old fold/unfold buttons
-           because we now have a single “menu” button in the header. 
-           Keeping them hidden if you want, or remove them entirely. -->
-      <!--
-      <button id="toggleSidebarBtn" class="fold-btn">⏴</button>
-      <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
-      -->
       <nav>
         <ul>
           <li><a href="#about">About Me</a></li>
@@ -45,8 +36,6 @@
           <li><a href="#photography">Photography</a></li>
         </ul>
       </nav>
-
-      <!-- Color Picker at bottom of sidebar -->
       <div class="color-picker-section">
         <label for="colorPicker">Base Hue:</label>
         <input type="color" id="colorPicker" value="#ff0000" />
@@ -54,16 +43,14 @@
     </div>
   </aside>
 
-  <!-- ===== FIXED HEADER ===== -->
+  <!-- FIXED HEADER -->
   <header>
-    <!-- Menu Button on the left side -->
     <button id="menuBtn" class="menu-btn">☰</button>
     <h1>Welcome to Yize Lu's Homepage</h1>
   </header>
 
-  <!-- ===== MAIN CONTENT ===== -->
   <main>
-    <!-- About Me section -->
+    <!-- About Me -->
     <section id="about">
       <figure>
         <img src="./images/myphoto.jpg" alt="My photo" />
@@ -73,7 +60,6 @@
         <h2>About Me</h2>
         <p>Hello! I'm Yize Lu, a front-end developer in training.</p>
       </article>
-
       <details>
         <summary>Click to see a hidden message</summary>
         <p>“I learned that details lets me show or hide content by default.
@@ -82,44 +68,41 @@
           that you don’t want to clutter the page.”
         </p>
       </details>
-
-      <!-- Example of a new HTML element: <dialog> -->
       <dialog id="cityDialog">
         <p>This is an example of the <dialog> element!</p>
         <button id="closeDialogBtn">Close</button>
       </dialog>
     </section>
 
-    <!-- Random Dog section -->
+    <!-- Random Dog -->
     <section id="random-dog">
       <h2>Random Dog Image</h2>
       <img id="dogImage" src="" alt="A random dog will appear here!" />
       <button id="getDogBtn">Get Random Dog Image</button>
     </section>
 
-    <!-- Photography Album section -->
+    <!-- Photography -->
     <section id="photography">
       <h2>My Photography Albums</h2>
-
-      <!-- Switch labeled "Grid Mode" -->
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <label for="galleryToggle" style="font-weight: bold;">Grid Mode</label>
+      <!-- 
+        1) Place "Grid Mode" label + the switch in the same row 
+           using a container with .grid-mode-row or similar.
+      -->
+      <div class="grid-mode-row">
+        <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
         <div class="switch-container">
           <input type="checkbox" id="galleryToggle" />
           <label for="galleryToggle" class="switch-label"></label>
         </div>
       </div>
 
-      <!-- Container for the photo thumbnails; default is single-row view -->
       <div id="photoGallery" class="photo-gallery single-row"></div>
     </section>
   </main>
 
   <footer>
     <p>© 2025 Yize. All rights reserved.</p>
-
     <div class="footer-links">
-      <!-- Bilibili link -->
       <a
         href="https://space.bilibili.com/421928912?spm_id_from=333.1007.0.0"
         target="_blank"
@@ -132,8 +115,6 @@
         />
         <span>Bilibili</span>
       </a>
-
-      <!-- RedNote link -->
       <a
         href="https://www.xiaohongshu.com/user/profile/60fd66b5000000000100a2bf"
         target="_blank"
@@ -149,20 +130,17 @@
     </div>
   </footer>
 
-  <!-- ===== LIGHTBOX OVERLAY ===== -->
+  <!-- LIGHTBOX -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
-      <!-- Close button (X) -->
       <span id="lightboxClose" class="lightbox-close">×</span>
-      <!-- The main displayed image -->
       <img id="lightboxImg" src="" alt="Full-size preview" />
-      <!-- Left/right arrows to cycle photos -->
       <span id="lightboxPrev" class="lightbox-arrow left">⟨</span>
       <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>
   </div>
 
-  <!-- Main JS -->
+  <!-- Script -->
   <script src="script.js"></script>
 </body>
 </html>

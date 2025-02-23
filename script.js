@@ -15,9 +15,7 @@ function fetchRandomDogImage() {
     });
 }
 
-// Fetch on button click
 getDogBtn.addEventListener("click", fetchRandomDogImage);
-// Optionally, fetch on page load
 window.addEventListener("load", fetchRandomDogImage);
 
 
@@ -45,30 +43,26 @@ for (let i = 1; i <= 26; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
 }
 
-// Create <img> elements for each photo
 photoURLs.forEach((url, index) => {
   const img = document.createElement("img");
   img.src = url;
   img.alt = `Photo ${index + 1}`;
-  // On click => open Lightbox
   img.addEventListener("click", () => {
     openLightbox(index);
   });
   photoGallery.appendChild(img);
 });
 
-// Default layout is single row
+// Default single-row
 photoGallery.classList.add("single-row");
 let isGridView = false;
 
-galleryToggle.addEventListener("change", (e) => {
-  if (e.target.checked) {
-    // Switch to grid layout
+galleryToggle.addEventListener("change", () => {
+  if (galleryToggle.checked) {
     photoGallery.classList.remove("single-row");
     photoGallery.classList.add("grid-layout");
     isGridView = true;
   } else {
-    // Switch back to single-row layout
     photoGallery.classList.remove("grid-layout");
     photoGallery.classList.add("single-row");
     isGridView = false;
@@ -84,21 +78,14 @@ const lightboxNext = document.getElementById("lightboxNext");
 
 let currentPhotoIndex = 0;
 
-// Open
 function openLightbox(index) {
   currentPhotoIndex = index;
   lightboxImg.src = photoURLs[currentPhotoIndex];
   lightbox.classList.remove("hidden");
 }
-
-// Close
 lightboxClose.addEventListener("click", () => {
   lightbox.classList.add("hidden");
 });
-
-// Prev/Next by clicking arrows
-lightboxPrev.addEventListener("click", showPrevPhoto);
-lightboxNext.addEventListener("click", showNextPhoto);
 
 function showPrevPhoto() {
   currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
@@ -109,18 +96,18 @@ function showNextPhoto() {
   lightboxImg.src = photoURLs[currentPhotoIndex];
 }
 
-// Keyboard left/right
+lightboxPrev.addEventListener("click", showPrevPhoto);
+lightboxNext.addEventListener("click", showNextPhoto);
+
+// Keyboard nav
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("hidden")) {
-    if (e.key === "ArrowLeft") {
-      showPrevPhoto();
-    } else if (e.key === "ArrowRight") {
-      showNextPhoto();
-    }
+    if (e.key === "ArrowLeft") showPrevPhoto();
+    if (e.key === "ArrowRight") showNextPhoto();
   }
 });
 
-// Touch swipe (mobile) in the lightbox
+// Touch swipe on mobile
 let touchStartX = 0;
 let touchEndX = 0;
 
@@ -130,13 +117,12 @@ lightbox.addEventListener("touchstart", (e) => {
 lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
-  // If swipe is significantly left or right
   if (Math.abs(diff) > 50) {
     if (diff < 0) {
-      // swiped left => next photo
+      // Swiped left => next photo
       showNextPhoto();
     } else {
-      // swiped right => prev photo
+      // Swiped right => prev photo
       showPrevPhoto();
     }
   }
@@ -144,13 +130,11 @@ lightbox.addEventListener("touchend", (e) => {
 
 
 /********************************************************
- *  4) COLLAPSIBLE SIDEBAR via single "menuBtn" in header
+ *  4) COLLAPSIBLE SIDEBAR with single "menuBtn" 
  ********************************************************/
 const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 
-/* By default, #sidebar has class "expanded" from HTML. 
-   We toggle between "expanded" and "collapsed" on click. */
 menuBtn.addEventListener("click", () => {
   if (sidebar.classList.contains("expanded")) {
     sidebar.classList.remove("expanded");
@@ -174,17 +158,15 @@ function hexToHSL(hex) {
   const g = parseInt(hex.slice(2, 4), 16) / 255;
   const b = parseInt(hex.slice(4, 6), 16) / 255;
 
-  const max = Math.max(r, g, b),
-        min = Math.min(r, g, b);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
   let h, s, l = (max + min) / 2;
 
   if (max === min) {
-    h = s = 0; // achromatic
+    h = s = 0;
   } else {
     const d = max - min;
-    s = (l > 0.5)
-      ? d / (2 - max - min)
-      : d / (max + min);
+    s = (l > 0.5) ? d / (2 - max - min) : d / (max + min);
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
       case g: h = (b - r) / d + 2; break;
@@ -204,7 +186,7 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
-colorPicker.dispatchEvent(new Event("input")); // initialize
+colorPicker.dispatchEvent(new Event("input")); // init
 
 document.addEventListener("mousemove", (event) => {
   const x = event.clientX;
@@ -217,8 +199,3 @@ document.addEventListener("mousemove", (event) => {
 
   document.body.style.backgroundColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
 });
-
-// Optional: track finger movement on mobile too
-// document.addEventListener("touchmove", (event) => {
-//   // similar logic to mousemove
-// });

@@ -1,4 +1,4 @@
-/* ===== 1) Global & Body ===== */
+/* ===== Global ===== */
 * {
     box-sizing: border-box;
   }
@@ -6,41 +6,37 @@
   html, body {
     margin: 0;
     padding: 0;
-    /* Let the body fill the page (for the sticky footer approach) */
     height: 100%;
   }
   
   body {
-    background-color: red; /* default fallback color */
+    background-color: red;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
     color: #333;
-  
-    /* Let’s make the body a flex container to push the footer down. */
     display: flex;
     flex-direction: column;
-  
-    transition: background-color 0.2s ease; /* for the color picker effect */
+    transition: background-color 0.2s ease;
   }
   
-  /* The main area flex:1 => grows, pushing footer to bottom */
+  /* Ensure main can push the footer down */
   main {
     flex: 1;
-    margin-top: 70px; /* So content does not hide under the fixed header (desktop) */
+    margin-top: 70px; /* So content doesn't hide under the fixed header (desktop) */
   }
   
-  /* ===== 2) SIDEBAR ===== */
+  /* ===== SIDEBAR ===== */
   #sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px; /* expanded width on desktop */
+    width: 260px; 
     background-color: #000;
     color: #fff;
     overflow: hidden;
     transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 1500; /* Below the header's z-index, so header's button isn't blocked. */
+    z-index: 1500; /* below header by default on desktop */
   }
   
   #sidebar.expanded {
@@ -52,12 +48,7 @@
     transform: translateX(0);
   }
   
-  /* We remove the old fold/unfold buttons, or set them to display none 
-     if you want them gone. Keeping them is optional. */
-  .fold-btn, .unfold-btn {
-    display: none;
-  }
-  
+  /* The .sidebar-content with nav, color picker, etc. */
   .sidebar-content {
     display: flex;
     flex-direction: column;
@@ -82,9 +73,8 @@
     text-decoration: underline;
   }
   
-  /* Color picker */
   .color-picker-section {
-    margin-top: auto; /* push to bottom */
+    margin-top: auto; 
     border-top: 1px solid #444;
     padding-top: 1rem;
     display: flex;
@@ -92,36 +82,29 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
-  .color-picker-section label {
-    font-size: 0.9rem;
-    font-weight: normal;
-  }
   .color-picker-section input[type="color"] {
     width: 40px;
     height: 30px;
-    border: none;
     cursor: pointer;
   }
   
-  /* ===== 3) HEADER (FIXED) ===== */
+  /* ===== HEADER (FIXED) ===== */
   header {
     position: fixed;
     top: 0;
     left: 0;
-    /* For desktop, we’ll see how we adjust the width with margin-left. 
-       But we'll do that differently in a moment. */
     width: 100%;
-    height: 70px;  /* a bit smaller for consistent look */
+    height: 70px;
     background-color: #555;
     color: #fff;
     display: flex;
     align-items: center;
-    z-index: 2000; /* Above sidebar so the menu button is clickable. */
+    z-index: 2000; 
     padding: 0 1rem;
     box-sizing: border-box;
   }
   
-  /* The menu button on the left */
+  /* The menu button on the left side of the header */
   .menu-btn {
     background: transparent;
     color: #fff;
@@ -131,16 +114,15 @@
     margin-right: 1rem;
   }
   
-  /* The header title in the center:
-     We'll let the h1 expand and center it flexibly. */
   header h1 {
     margin: 0 auto;
     text-align: center;
     max-width: 90%;
     overflow-wrap: break-word;
+    /* (2) On mobile, we will reduce font size to avoid overflow. */
   }
   
-  /* ===== 4) Footer ===== */
+  /* ===== FOOTER ===== */
   footer {
     background-color: #333;
     color: #aaa;
@@ -171,14 +153,13 @@
     margin-bottom: 0.5rem;
   }
   
-  /* ===== 5) Sections & Elements ===== */
+  /* ===== MAIN SECTIONS ===== */
   section {
     background-color: white;
     padding: 1.5rem;
-    margin: 0 1rem;
+    margin: 0 1rem 2rem 1rem;
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
   }
   figure {
     margin: 0 0 1rem 0;
@@ -197,7 +178,6 @@
     color: #666;
     margin-top: 0.5rem;
   }
-  
   details {
     margin-top: 1rem;
     padding: 0.5rem;
@@ -208,11 +188,8 @@
     cursor: pointer;
     font-weight: bold;
   }
-  details p {
-    margin-top: 0.5rem;
-  }
   
-  /* ===== Random Dog Image ===== */
+  /* ===== Random Dog ===== */
   #random-dog img {
     width: auto;
     max-width: 90%;
@@ -240,33 +217,41 @@
     background-color: #01447e;
   }
   
-  /* ===== 6) Switch for "Grid Mode" ===== */
-  .switch-container {
-    display: inline-block;
-    position: relative;
-    width: 48px; /* tweak to your preference */
-    height: 24px;
+  /* ===== GRID MODE SWITCH ===== */
+  /* (1) Let them appear side by side with a small gap. */
+  .grid-mode-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
   }
   
+  .grid-mode-label {
+    font-weight: bold;
+    /* no special styling needed, just label text */
+  }
+  
+  /* The switch itself */
+  .switch-container {
+    position: relative;
+    width: 48px;
+    height: 24px;
+  }
   .switch-container input[type="checkbox"] {
     opacity: 0;
     width: 0;
     height: 0;
   }
-  
-  /* The slider track */
   .switch-label {
     cursor: pointer;
     background: #ccc;
     border-radius: 24px;
-    display: inline-block;
+    display: block;
     width: 100%;
     height: 100%;
     position: relative;
     transition: background 0.3s;
   }
-  
-  /* The knob */
   .switch-label::after {
     content: "";
     position: absolute;
@@ -278,20 +263,17 @@
     border-radius: 20px;
     transition: transform 0.3s;
   }
-  
   .switch-container input[type="checkbox"]:checked + .switch-label {
-    background: #66bb6a; /* ON color */
+    background: #66bb6a;
   }
-  
   .switch-container input[type="checkbox"]:checked + .switch-label::after {
-    transform: translateX(24px); /* move knob to the right */
+    transform: translateX(24px);
   }
   
-  /* ===== 7) Photo Gallery Layouts ===== */
+  /* ===== PHOTO GALLERY ===== */
   .photo-gallery {
     margin-top: 1rem;
   }
-  
   .single-row {
     display: flex;
     flex-direction: row;
@@ -308,7 +290,6 @@
     flex-shrink: 0;
     margin: 0 auto;
   }
-  
   .grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -321,7 +302,7 @@
     border-radius: 6px;
   }
   
-  /* ===== 8) Lightbox Overlay ===== */
+  /* ===== LIGHTBOX ===== */
   #lightbox {
     position: fixed;
     top: 0;
@@ -329,12 +310,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.8);
-    display: flex; /* center the content */
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3000; /* above header and sidebar */
+    z-index: 3000; 
   }
-  
   #lightbox.hidden {
     display: none;
   }
@@ -347,7 +327,6 @@
     max-width: 90%;
     max-height: 90%;
   }
-  
   #lightboxImg {
     width: auto;
     height: auto;
@@ -358,8 +337,6 @@
     border: 4px solid #fff;
     border-radius: 4px;
   }
-  
-  /* Close button (X) */
   .lightbox-close {
     position: absolute;
     top: -40px;
@@ -368,8 +345,6 @@
     font-size: 2rem;
     cursor: pointer;
   }
-  
-  /* Left/Right arrow buttons */
   .lightbox-arrow {
     color: #fff;
     font-size: 3rem;
@@ -392,19 +367,9 @@
     right: -50px;
   }
   
-  /* ===== Utility Classes ===== */
-  .hidden {
-    display: none;
-  }
-  
-  /* ===== 9) DESKTOP-ONLY RULES ===== */
-  /* On desktop (width > 600px), the sidebar pushes content by margin-left. 
-     The header also "shrinks" in width so it lines up with the main content. */
+  /* ===== Desktop-Only Rules (≥ 601px) ===== */
+  /* The sidebar pushes content by margin-left on desktop. */
   @media (min-width: 601px) {
-    /* This is the same approach you had for “main, header, footer margin-left = 260px” 
-       or 40px, depending on expanded or collapsed. 
-       We'll do it with sibling selectors or a small hack. */
-  
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer {
@@ -417,19 +382,34 @@
     }
   }
   
-  /* ===== 10) SMARTPHONE-ONLY RULES ===== */
+  /* ===== Mobile-Only Rules (≤ 600px) ===== */
   @media (max-width: 600px) {
-    /* Smaller header height */
+    /* (2) Reduce header font-size to avoid overflow */
+    header h1 {
+      font-size: 1rem; 
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* Make the header smaller in height */
     header {
       height: 50px;
     }
+    /* Then offset main a bit less so it doesn't hide under header. */
     main {
-      margin-top: 50px; /* offset main content so it isn’t hidden behind the header */
+      margin-top: 50px;
     }
   
-    /* Make the sidebar fully overlay (translateX) instead of 40px leftover. */
+    /* 
+      (3) We want the sidebar to float ON TOP of the header
+          so let's give it a higher z-index than the header 
+          and also ensure it starts at top:0 
+          (thus covering that area instead of being behind it).
+    */
     #sidebar {
-      width: 200px; 
+      z-index: 3000; 
+      width: 160px; /* (4) narrower width on mobile to remove extra gap */
       transform: translateX(-100%);
     }
     #sidebar.expanded {
@@ -439,7 +419,10 @@
       transform: translateX(-100%);
     }
   
-    /* Do not margin-left the header and main on small screens */
+    /* 
+      Because the sidebar is overlaying, 
+      do NOT margin-left the header/main on phone. 
+    */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -449,14 +432,13 @@
       margin-left: 0 !important;
     }
   
-    /* Lightbox arrows closer to the photo so they don’t go off-screen */
+    /* Move the lightbox arrows closer so they don't go off-screen. */
     .lightbox-arrow.left {
       left: -30px;
     }
     .lightbox-arrow.right {
       right: -30px;
     }
-    /* Make the lightbox image a bit smaller so it fits better */
     #lightboxImg {
       max-width: 85vw;
       max-height: 80vh;
