@@ -35,7 +35,6 @@
           <li><a href="#photography">Photography</a></li>
         </ul>
       </nav>
-      <!-- Color picker section, no longer stuck at bottom -->
       <div class="color-picker-section">
         <label for="colorPicker">Base Hue:</label>
         <input type="color" id="colorPicker" value="#ff0000" />
@@ -85,12 +84,11 @@
     <section id="photography">
       <h2>My Photography Albums</h2>
       <!-- 
-           A row container for "Grid Mode" text and the switch.
-           They must stay on the same line (平行).
+        A small inline-flex container for "Grid Mode" text and the switch,
+        ensuring they remain truly on the same horizontal line.
       -->
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
-
         <div class="switch-container">
           <input type="checkbox" id="galleryToggle" />
           <label for="galleryToggle" class="switch-label"></label>
@@ -134,8 +132,19 @@
   <!-- LIGHTBOX -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
+      <!-- Close button (X) -->
       <span id="lightboxClose" class="lightbox-close">×</span>
+      
+      <!-- Zoom in/out buttons at bottom-left corner inside the lightbox -->
+      <div class="zoom-controls">
+        <button id="zoomInBtn" class="zoom-btn">+</button>
+        <button id="zoomOutBtn" class="zoom-btn">-</button>
+      </div>
+
+      <!-- The main displayed image -->
       <img id="lightboxImg" src="" alt="Full-size preview" />
+      
+      <!-- Left/right arrows to cycle photos -->
       <span id="lightboxPrev" class="lightbox-arrow left">⟨</span>
       <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>

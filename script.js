@@ -43,18 +43,18 @@ for (let i = 1; i <= 26; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
 }
 
+// Create images
 photoURLs.forEach((url, index) => {
   const img = document.createElement("img");
   img.src = url;
   img.alt = `Photo ${index + 1}`;
-  // open lightbox on click
   img.addEventListener("click", () => {
     openLightbox(index);
   });
   photoGallery.appendChild(img);
 });
 
-// default layout = single-row
+// Default single-row
 photoGallery.classList.add("single-row");
 let isGridView = false;
 
@@ -77,30 +77,44 @@ const lightboxClose = document.getElementById("lightboxClose");
 const lightboxPrev = document.getElementById("lightboxPrev");
 const lightboxNext = document.getElementById("lightboxNext");
 
-let currentPhotoIndex = 0;
+// New zoom controls
+const zoomInBtn = document.getElementById("zoomInBtn");
+const zoomOutBtn = document.getElementById("zoomOutBtn");
+let zoomFactor = 1; // default scale
 
+// open
+let currentPhotoIndex = 0;
 function openLightbox(index) {
   currentPhotoIndex = index;
+  zoomFactor = 1; // reset zoom each time we open or switch photo
+  applyZoom();
+
   lightboxImg.src = photoURLs[currentPhotoIndex];
   lightbox.classList.remove("hidden");
 }
+
 lightboxClose.addEventListener("click", () => {
   lightbox.classList.add("hidden");
 });
 
+// prev/next
 function showPrevPhoto() {
   currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
+  zoomFactor = 1;   // reset zoom when switching
+  applyZoom();
   lightboxImg.src = photoURLs[currentPhotoIndex];
 }
 function showNextPhoto() {
   currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
+  zoomFactor = 1;   // reset zoom
+  applyZoom();
   lightboxImg.src = photoURLs[currentPhotoIndex];
 }
 
 lightboxPrev.addEventListener("click", showPrevPhoto);
 lightboxNext.addEventListener("click", showNextPhoto);
 
-// Keyboard arrow nav in lightbox
+// keyboard arrow nav
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("hidden")) {
     if (e.key === "ArrowLeft") showPrevPhoto();
@@ -108,8 +122,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// Touch swipe in lightbox
-let touchStartX = 0, touchEndX = 0;
+// swipe nav
+let touchStartX = 0;
+let touchEndX = 0;
 lightbox.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].clientX;
 });
@@ -117,10 +132,25 @@ lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
   if (Math.abs(diff) > 50) {
-    if (diff < 0) showNextPhoto(); // swiped left => next
-    else showPrevPhoto();          // swiped right => prev
+    if (diff < 0) showNextPhoto(); 
+    else showPrevPhoto();
   }
 });
+
+// Zoom in/out
+zoomInBtn.addEventListener("click", () => {
+  zoomFactor += 0.2;
+  if (zoomFactor > 5) zoomFactor = 5; // optional upper limit
+  applyZoom();
+});
+zoomOutBtn.addEventListener("click", () => {
+  zoomFactor -= 0.2;
+  if (zoomFactor < 0.2) zoomFactor = 0.2; // optional lower limit
+  applyZoom();
+});
+function applyZoom() {
+  lightboxImg.style.transform = `scale(${zoomFactor})`;
+}
 
 
 /********************************************************
@@ -130,7 +160,6 @@ const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 
 menuBtn.addEventListener("click", () => {
-  // Toggle
   if (sidebar.classList.contains("expanded")) {
     sidebar.classList.remove("expanded");
     sidebar.classList.add("collapsed");
@@ -138,15 +167,12 @@ menuBtn.addEventListener("click", () => {
     sidebar.classList.remove("collapsed");
     sidebar.classList.add("expanded");
   }
-  // (4) Immediately remove focus so the button 
-  //     does not remain "blue" after clicking.
+  // Immediately remove focus so it doesn't stay blue
   menuBtn.blur();
 });
 
 // On smartphone: fold sidebar by swiping left
 let sideStartX = 0;
-let sideEndX = 0;
-
 sidebar.addEventListener("touchstart", (e) => {
   if (sidebar.classList.contains("expanded")) {
     sideStartX = e.changedTouches[0].clientX;
@@ -154,12 +180,10 @@ sidebar.addEventListener("touchstart", (e) => {
 });
 sidebar.addEventListener("touchend", (e) => {
   if (!sidebar.classList.contains("expanded")) return;
-  
-  sideEndX = e.changedTouches[0].clientX;
+  const sideEndX = e.changedTouches[0].clientX;
   const diff = sideEndX - sideStartX;
-
-  // If user swiped left enough (negative diff < -40):
   if (diff < -40) {
+    // swiped left enough
     sidebar.classList.remove("expanded");
     sidebar.classList.add("collapsed");
   }
@@ -182,10 +206,12 @@ function hexToHSL(hex) {
   let h, s, l = (max + min) / 2;
 
   if (max === min) {
-    h = s = 0;
+    h = s = 0; // achromatic
   } else {
     const d = max - min;
-    s = (l > 0.5) ? d / (2 - max - min) : d / (max + min);
+    s = (l > 0.5)
+      ? d / (2 - max - min)
+      : d / (max + min);
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
       case g: h = (b - r) / d + 2; break;
@@ -205,8 +231,7 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
-// init
-colorPicker.dispatchEvent(new Event("input"));
+colorPicker.dispatchEvent(new Event("input")); // init
 
 document.addEventListener("mousemove", (event) => {
   const x = event.clientX;

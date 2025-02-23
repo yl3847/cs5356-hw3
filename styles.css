@@ -16,10 +16,11 @@
     flex-direction: column;
     transition: background-color 0.2s ease;
   }
-  /* Let main push the footer to bottom */
+  
+  /* The main area pushes the footer down */
   main {
     flex: 1;
-    margin-top: 70px; /* desktop offset for fixed header */
+    margin-top: 70px; /* for the desktop header height */
   }
   
   /* ===== SIDEBAR ===== */
@@ -31,10 +32,11 @@
     width: 260px;
     background-color: #000;
     color: #fff;
-    overflow: hidden;
+    overflow: hidden; /* hide overflow */
     transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 1500; /* below the header on desktop */
+    z-index: 1500; /* below header on desktop */
   }
+  
   #sidebar.expanded {
     width: 260px;
     transform: translateX(0);
@@ -43,25 +45,16 @@
     width: 40px;
     transform: translateX(0);
   }
+  
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: 1rem;
+    /* Force no wrap in the nav so that "Photography" doesn't break lines */
+    white-space: nowrap;
   }
-  /* 
-    Removed margin-top: auto so the color-picker 
-    is not pinned to the bottom (prevents being blocked on phone).
-  */
-  .color-picker-section {
-    margin-top: 1rem;
-    border-top: 1px solid #444;
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
+  
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -79,6 +72,17 @@
     text-decoration: underline;
   }
   
+  /* Color picker area (not pinned to bottom) */
+  .color-picker-section {
+    margin-top: 1rem;
+    border-top: 1px solid #444;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
   /* ===== HEADER (FIXED) ===== */
   header {
     position: fixed;
@@ -94,16 +98,26 @@
     box-sizing: border-box;
     z-index: 2000;
   }
+  
   .menu-btn {
-    background: transparent;
+    background: #555; /* match header background for consistency */
     color: #fff;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     margin-right: 1rem;
-    /* remove focus outline so it doesn't stay blue */
+    
+    /* Remove focus outline and other states quickly: */
     outline: none;
   }
+  
+  /* For any pressed/focused states, we remove the outline immediately. */
+  .menu-btn:focus,
+  .menu-btn:active {
+    outline: none;
+    background: #555; /* keep it the same color so no 'blue' or 'focus ring' */
+  }
+  
   header h1 {
     margin: 0 auto;
     text-align: center;
@@ -177,7 +191,7 @@
     font-weight: bold;
   }
   
-  /* ===== Random Dog ===== */
+  /* Random Dog */
   #random-dog img {
     width: auto;
     max-width: 90%;
@@ -187,7 +201,7 @@
     object-fit: cover;
   }
   
-  /* ===== BUTTONS ===== */
+  /* Buttons */
   button {
     background-color: #0275d8;
     color: #fff;
@@ -203,66 +217,73 @@
   }
   button:focus,
   button:active {
-    outline: none; /* remove dotted outline on focus if needed */
+    outline: none; /* remove any dotted outline on focus */
   }
   
   /* ===== GRID MODE SWITCH ===== */
+  /* We use inline-flex so the label + switch are guaranteed side-by-side. */
   .grid-mode-row {
-    /* Must ensure they share the same baseline / alignment
-       and also enough margin so it doesn't overlap photos. */
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    margin: 1rem 0; /* bigger margin so it doesn't intrude on photos */
+    gap: 0.5rem;
+    margin: 1rem 0;
   }
+  
   .grid-mode-label {
     font-weight: bold;
     margin: 0;
-    line-height: 1.4;
   }
+  
+  /* The switch is bigger so it doesn't collapse or shift. */
   .switch-container {
     position: relative;
-    width: 52px;  /* made switch bigger/taller to ensure no overlap */
-    height: 28px;
+    width: 50px;
+    height: 24px;
+    flex-shrink: 0;
   }
+  
   .switch-container input[type="checkbox"] {
     opacity: 0;
     width: 0;
     height: 0;
     margin: 0;
   }
+  
   .switch-label {
     cursor: pointer;
     background: #ccc;
-    border-radius: 28px;
+    border-radius: 24px;
     display: inline-block;
     width: 100%;
     height: 100%;
     position: relative;
     transition: background 0.3s;
   }
+  
   .switch-label::after {
     content: "";
     position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 22px;
-    height: 22px;
+    left: 2px;
+    top: 2px;
+    width: 20px;
+    height: 20px;
     background: #fff;
-    border-radius: 22px;
+    border-radius: 20px;
     transition: transform 0.3s;
   }
+  
   .switch-container input[type="checkbox"]:checked + .switch-label {
     background: #66bb6a;
   }
   .switch-container input[type="checkbox"]:checked + .switch-label::after {
-    transform: translateX(24px);
+    transform: translateX(26px);
   }
   
   /* ===== PHOTO GALLERY ===== */
   .photo-gallery {
     margin-top: 1rem;
   }
+  
   .single-row {
     display: flex;
     flex-direction: row;
@@ -279,6 +300,7 @@
     flex-shrink: 0;
     margin: 0 auto;
   }
+  
   .grid-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -314,6 +336,7 @@
     align-items: center;
     max-width: 90%;
     max-height: 90%;
+    /* So tapping outside .lightbox-content can close the lightbox. */
   }
   #lightboxImg {
     width: auto;
@@ -324,7 +347,10 @@
     display: block;
     border: 4px solid #fff;
     border-radius: 4px;
+    transition: transform 0.3s; /* smooth scaling on pinch or plus/minus */
   }
+  
+  /* close button (X) */
   .lightbox-close {
     position: absolute;
     top: -40px;
@@ -333,6 +359,8 @@
     font-size: 2rem;
     cursor: pointer;
   }
+  
+  /* Left/Right arrows */
   .lightbox-arrow {
     color: #fff;
     font-size: 3rem;
@@ -353,6 +381,29 @@
   }
   .lightbox-arrow.right {
     right: -50px;
+  }
+  
+  /* Zoom in/out buttons in the bottom-left corner of .lightbox-content */
+  .zoom-controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem;
+  }
+  
+  .zoom-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.8);
+    color: #000;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    outline: none;
   }
   
   /* ===== DESKTOP (≥601px) ===== */
@@ -379,17 +430,21 @@
     }
     header {
       height: 50px;
-      z-index: 9999; /* ensure the header is above the sidebar so we can press menuBtn */
+      z-index: 9999; /* header above the sidebar on phone */
     }
     main {
-      margin-top: 50px; /* to avoid header overlap */
+      margin-top: 50px;
     }
   
-    /* Let sidebar be narrower, just enough for "Photography" */
+    /* 
+      Let the sidebar auto-size to fit menu. 
+      We do width:auto, transform: translateX(-100%) to hide. 
+    */
     #sidebar {
-      top: 50px;    /* so it starts below header */
-      width: 110px; /* narrower - minimal gap */
-      z-index: 2000;/* below header */
+      top: 50px;     /* below the header */
+      width: auto;
+      min-width: 40px; /* must allow collapsed to be 40px wide */
+      z-index: 2000; 
       transform: translateX(-100%);
     }
     #sidebar.expanded {
@@ -399,7 +454,7 @@
       transform: translateX(-100%);
     }
   
-    /* No horizontal shift for main on phone */
+    /* no margin-left shifting for main on phone */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -409,6 +464,7 @@
       margin-left: 0 !important;
     }
   
+    /* Lightbox arrow adjustments */
     .lightbox-arrow.left {
       left: -30px;
     }
