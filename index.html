@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <title>My Personal Homepage</title>
+
+  <!-- 1) Add the viewport meta for mobile responsiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Open Graph tags for link previews -->
   <meta property="og:title" content="My Personal Homepage" />
   <meta property="og:description" content="I'm Yize Lu, a front-end developer in training" />
@@ -44,8 +48,6 @@
     <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
   </aside>
 
-
-
   <!-- ===== MAIN PAGE CONTENT ===== -->
   <header>
     <h1>Welcome to My Personal Homepage</h1>
@@ -60,7 +62,7 @@
       </figure>
       <article>
         <h2>About Me</h2>
-        <p>Hello! I'm Yize Lu, a front-end developer in training...</p>
+        <p>Hello! I'm Yize Lu, a front-end developer in training.</p>
       </article>
 
       <details>
@@ -89,12 +91,14 @@
     <!-- Photography Album section -->
     <section id="photography">
       <h2>My Photography Albums</h2>
-      <!-- Toggle between single-row and grid -->
-      <button id="toggleGalleryBtn">Show all My Photos</button>
       
+      <!-- 4) Use a “duality” UI instead of a single toggle button: e.g., a checkbox -->
+      <label for="galleryToggle" class="toggle-label">Grid View?</label>
+      <input type="checkbox" id="galleryToggle" />
+
       <!-- Container for the photo thumbnails; default is single-row view -->
       <div id="photoGallery" class="photo-gallery single-row">
-        <!-- We will inject <img> elements via JS, or you can also put them in HTML if you prefer -->
+        <!-- Photo <img> elements added by JavaScript -->
       </div>
     </section>
   </main>
@@ -133,7 +137,6 @@
     </div>
   </footer>
   
-
   <!-- ===== LIGHTBOX OVERLAY ===== -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
@@ -149,9 +152,7 @@
     </div>
   </div>
   
-
   <!-- Main JS -->
   <script src="script.js"></script>
 </body>
 </html>
-

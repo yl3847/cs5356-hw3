@@ -38,9 +38,10 @@ if (closeDialogBtn) {
  *  3) PHOTOGRAPHY GALLERY: Single Row vs. Grid + Lightbox
  ********************************************************/
 const photoGallery = document.getElementById("photoGallery");
-const toggleGalleryBtn = document.getElementById("toggleGalleryBtn");
+/* Instead of toggleGalleryBtn, we now have a checkbox */
+const galleryToggle = document.getElementById("galleryToggle");
 
-// Build an array of local photos (photo1.jpg up to photo26.jpg)
+// Build an array of local photos
 const photoURLs = [];
 for (let i = 1; i <= 26; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
@@ -51,7 +52,6 @@ photoURLs.forEach((url, index) => {
   const img = document.createElement("img");
   img.src = url;
   img.alt = `Photo ${index + 1}`;
-  // On click => open Lightbox with the photo's index
   img.addEventListener("click", () => {
     openLightbox(index);
   });
@@ -60,20 +60,19 @@ photoURLs.forEach((url, index) => {
 
 // Default is single-row layout
 photoGallery.classList.add("single-row");
-let isGridView = false; // track if we are in grid or not
+let isGridView = false;
 
-toggleGalleryBtn.addEventListener("click", () => {
-  if (!isGridView) {
+/* Listen for checkbox changes */
+galleryToggle.addEventListener("change", (e) => {
+  if (e.target.checked) {
     // Switch to grid layout
     photoGallery.classList.remove("single-row");
     photoGallery.classList.add("grid-layout");
-    toggleGalleryBtn.textContent = "Hide My Photos";
     isGridView = true;
   } else {
     // Switch back to single-row layout
     photoGallery.classList.remove("grid-layout");
     photoGallery.classList.add("single-row");
-    toggleGalleryBtn.textContent = "Show all My Photos";
     isGridView = false;
   }
 });
@@ -82,38 +81,29 @@ toggleGalleryBtn.addEventListener("click", () => {
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
-
-// NEW: Next/Prev arrows
 const lightboxPrev = document.getElementById("lightboxPrev");
 const lightboxNext = document.getElementById("lightboxNext");
 
-// Store current photo index so we can move next or prev
 let currentPhotoIndex = 0;
 
-// Open the lightbox with a specific photo index
 function openLightbox(index) {
   currentPhotoIndex = index;
   lightboxImg.src = photoURLs[currentPhotoIndex];
   lightbox.classList.remove("hidden");
 }
 
-// Close the lightbox
 lightboxClose.addEventListener("click", () => {
   lightbox.classList.add("hidden");
 });
 
-// Prev/Next arrow event listeners
 lightboxPrev.addEventListener("click", () => {
-  // Move to previous index
   currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
   lightboxImg.src = photoURLs[currentPhotoIndex];
 });
 lightboxNext.addEventListener("click", () => {
-  // Move to next index
   currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
   lightboxImg.src = photoURLs[currentPhotoIndex];
 });
-
 
 
 /********************************************************
@@ -155,7 +145,7 @@ function hexToHSL(hex) {
     h = s = 0;
   } else {
     const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    s = (l > 0.5) ? d / (2 - max - min) : d / (max + min);
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
       case g: h = (b - r) / d + 2; break;
@@ -163,7 +153,6 @@ function hexToHSL(hex) {
     }
     h *= 60;
   }
-
   s *= 100;
   l *= 100;
   return { 
@@ -174,8 +163,8 @@ function hexToHSL(hex) {
 }
 
 let baseHue = 0;
-
 const colorPicker = document.getElementById("colorPicker");
+
 colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
@@ -194,3 +183,11 @@ document.addEventListener("mousemove", (event) => {
 
   document.body.style.backgroundColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
 });
+
+/* 
+Optionally, to also track finger movement on mobile, 
+you could add a 'touchmove' listener:
+document.addEventListener("touchmove", (event) => {
+  // do similar logic
+});
+*/
