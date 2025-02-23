@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <title>My Personal Homepage</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Open Graph tags -->
@@ -25,7 +24,7 @@
   </script>
 </head>
 <body>
-  <!-- SIDEBAR -->
+  <!-- ===== SIDEBAR ===== -->
   <aside id="sidebar" class="expanded">
     <div class="sidebar-content">
       <nav>
@@ -42,7 +41,7 @@
     </div>
   </aside>
 
-  <!-- FIXED HEADER -->
+  <!-- ===== FIXED HEADER ===== -->
   <header>
     <button id="menuBtn" class="menu-btn">☰</button>
     <h1>Welcome to Yize Lu's Homepage</h1>
@@ -83,10 +82,6 @@
     <!-- Photography -->
     <section id="photography">
       <h2>My Photography Albums</h2>
-      <!-- 
-        A small inline-flex container for "Grid Mode" text and the switch,
-        ensuring they remain truly on the same horizontal line.
-      -->
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
         <div class="switch-container">
@@ -94,7 +89,6 @@
           <label for="galleryToggle" class="switch-label"></label>
         </div>
       </div>
-
       <div id="photoGallery" class="photo-gallery single-row"></div>
     </section>
   </main>
@@ -102,49 +96,28 @@
   <footer>
     <p>© 2025 Yize. All rights reserved.</p>
     <div class="footer-links">
-      <a
-        href="https://space.bilibili.com/421928912?spm_id_from=333.1007.0.0"
-        target="_blank"
-        class="footer-icon-link"
-      >
-        <img
-          src="./images/bilibili-logo-white.png"
-          alt="Bilibili"
-          class="footer-icon"
-        />
+      <a href="https://space.bilibili.com/421928912?spm_id_from=333.1007.0.0" target="_blank" class="footer-icon-link">
+        <img src="./images/bilibili-logo-white.png" alt="Bilibili" class="footer-icon" />
         <span>Bilibili</span>
       </a>
-      <a
-        href="https://www.xiaohongshu.com/user/profile/60fd66b5000000000100a2bf"
-        target="_blank"
-        class="footer-icon-link"
-      >
-        <img
-          src="./images/rednote-logo-white.png"
-          alt="RedNote"
-          class="footer-icon"
-        />
+      <a href="https://www.xiaohongshu.com/user/profile/60fd66b5000000000100a2bf" target="_blank" class="footer-icon-link">
+        <img src="./images/rednote-logo-white.png" alt="RedNote" class="footer-icon" />
         <span>RedNote</span>
       </a>
     </div>
   </footer>
 
-  <!-- LIGHTBOX -->
+  <!-- ===== LIGHTBOX ===== -->
   <div id="lightbox" class="hidden">
     <div class="lightbox-content">
-      <!-- Close button (X) -->
       <span id="lightboxClose" class="lightbox-close">×</span>
-      
-      <!-- Zoom in/out buttons at bottom-left corner inside the lightbox -->
-      <div class="zoom-controls">
-        <button id="zoomInBtn" class="zoom-btn">+</button>
-        <button id="zoomOutBtn" class="zoom-btn">-</button>
+      <div class="lightbox-img-container">
+        <img id="lightboxImg" src="" alt="Full-size preview" />
+        <div id="zoomControls">
+          <button id="zoomInBtn" class="zoom-btn">+</button>
+          <button id="zoomOutBtn" class="zoom-btn">-</button>
+        </div>
       </div>
-
-      <!-- The main displayed image -->
-      <img id="lightboxImg" src="" alt="Full-size preview" />
-      
-      <!-- Left/right arrows to cycle photos -->
       <span id="lightboxPrev" class="lightbox-arrow left">⟨</span>
       <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>

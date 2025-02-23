@@ -18,7 +18,6 @@ function fetchRandomDogImage() {
 getDogBtn.addEventListener("click", fetchRandomDogImage);
 window.addEventListener("load", fetchRandomDogImage);
 
-
 /********************************************************
  *  2) DIALOG ELEMENT LOGIC
  ********************************************************/
@@ -30,7 +29,6 @@ if (closeDialogBtn) {
     cityDialog.close();
   });
 }
-
 
 /********************************************************
  *  3) PHOTOGRAPHY GALLERY: Single Row vs. Grid + Lightbox
@@ -70,25 +68,25 @@ galleryToggle.addEventListener("change", () => {
   }
 });
 
-/*** LIGHTBOX ***/
+/********************************************************
+ *  4) LIGHTBOX
+ ********************************************************/
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
 const lightboxPrev = document.getElementById("lightboxPrev");
 const lightboxNext = document.getElementById("lightboxNext");
 
-// New zoom controls
+// Zoom controls
 const zoomInBtn = document.getElementById("zoomInBtn");
 const zoomOutBtn = document.getElementById("zoomOutBtn");
 let zoomFactor = 1; // default scale
 
-// open
 let currentPhotoIndex = 0;
 function openLightbox(index) {
   currentPhotoIndex = index;
-  zoomFactor = 1; // reset zoom each time we open or switch photo
+  zoomFactor = 1; // reset zoom on open/switch
   applyZoom();
-
   lightboxImg.src = photoURLs[currentPhotoIndex];
   lightbox.classList.remove("hidden");
 }
@@ -97,16 +95,16 @@ lightboxClose.addEventListener("click", () => {
   lightbox.classList.add("hidden");
 });
 
-// prev/next
 function showPrevPhoto() {
   currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
-  zoomFactor = 1;   // reset zoom when switching
+  zoomFactor = 1; // reset zoom when switching
   applyZoom();
   lightboxImg.src = photoURLs[currentPhotoIndex];
 }
+
 function showNextPhoto() {
   currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
-  zoomFactor = 1;   // reset zoom
+  zoomFactor = 1; // reset zoom when switching
   applyZoom();
   lightboxImg.src = photoURLs[currentPhotoIndex];
 }
@@ -114,7 +112,7 @@ function showNextPhoto() {
 lightboxPrev.addEventListener("click", showPrevPhoto);
 lightboxNext.addEventListener("click", showNextPhoto);
 
-// keyboard arrow nav
+// Keyboard navigation
 document.addEventListener("keydown", (e) => {
   if (!lightbox.classList.contains("hidden")) {
     if (e.key === "ArrowLeft") showPrevPhoto();
@@ -122,7 +120,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// swipe nav
+// Swipe navigation
 let touchStartX = 0;
 let touchEndX = 0;
 lightbox.addEventListener("touchstart", (e) => {
@@ -132,7 +130,7 @@ lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
   if (Math.abs(diff) > 50) {
-    if (diff < 0) showNextPhoto(); 
+    if (diff < 0) showNextPhoto();
     else showPrevPhoto();
   }
 });
@@ -140,36 +138,36 @@ lightbox.addEventListener("touchend", (e) => {
 // Zoom in/out
 zoomInBtn.addEventListener("click", () => {
   zoomFactor += 0.2;
-  if (zoomFactor > 5) zoomFactor = 5; // optional upper limit
+  if (zoomFactor > 5) zoomFactor = 5;
   applyZoom();
 });
 zoomOutBtn.addEventListener("click", () => {
   zoomFactor -= 0.2;
-  if (zoomFactor < 0.2) zoomFactor = 0.2; // optional lower limit
+  if (zoomFactor < 0.2) zoomFactor = 0.2;
   applyZoom();
 });
 function applyZoom() {
   lightboxImg.style.transform = `scale(${zoomFactor})`;
 }
 
-
 /********************************************************
- *  4) COLLAPSIBLE SIDEBAR (MENU BUTTON)
+ *  5) COLLAPSIBLE SIDEBAR (MENU BUTTON)
  ********************************************************/
 const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 
 menuBtn.addEventListener("click", () => {
-  if (sidebar.classList.contains("expanded")) {
-    sidebar.classList.remove("expanded");
-    sidebar.classList.add("collapsed");
-  } else {
-    sidebar.classList.remove("collapsed");
-    sidebar.classList.add("expanded");
-  }
-  // Immediately remove focus so it doesn't stay blue
-  menuBtn.blur();
-});
+    if (sidebar.classList.contains("expanded")) {
+      sidebar.classList.remove("expanded");
+      sidebar.classList.add("collapsed");
+    } else {
+      sidebar.classList.remove("collapsed");
+      sidebar.classList.add("expanded");
+    }
+    // Only blur to remove focus (letting CSS handle hover/active)
+    menuBtn.blur();
+  });
+  
 
 // On smartphone: fold sidebar by swiping left
 let sideStartX = 0;
@@ -183,15 +181,13 @@ sidebar.addEventListener("touchend", (e) => {
   const sideEndX = e.changedTouches[0].clientX;
   const diff = sideEndX - sideStartX;
   if (diff < -40) {
-    // swiped left enough
     sidebar.classList.remove("expanded");
     sidebar.classList.add("collapsed");
   }
 });
 
-
 /********************************************************
- *  5) BACKGROUND COLOR (HSL) via colorPicker
+ *  6) BACKGROUND COLOR (HSL) via colorPicker
  ********************************************************/
 function hexToHSL(hex) {
   hex = hex.replace(/^#/, "");
@@ -206,12 +202,10 @@ function hexToHSL(hex) {
   let h, s, l = (max + min) / 2;
 
   if (max === min) {
-    h = s = 0; // achromatic
+    h = s = 0;
   } else {
     const d = max - min;
-    s = (l > 0.5)
-      ? d / (2 - max - min)
-      : d / (max + min);
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
       case g: h = (b - r) / d + 2; break;
@@ -231,7 +225,7 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
-colorPicker.dispatchEvent(new Event("input")); // init
+colorPicker.dispatchEvent(new Event("input"));
 
 document.addEventListener("mousemove", (event) => {
   const x = event.clientX;
