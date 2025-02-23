@@ -6,22 +6,16 @@
   html, body {
     margin: 0;
     padding: 0;
-  
-    /* 3) Help the footer remain at the bottom:
-       Make the body take up the full viewport height 
-       and allow a flex layout */
     height: 100%;
   }
   
   body {
-    /* Default fallback background color (2) */
-    background-color: red;
-    
+    background-color: red; /* fallback color */
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
     color: #333;
   
-    /* Let’s make the body flex to push footer down if needed */
+    /* Body is a flex container so the footer can be pushed down if needed */
     display: flex;
     flex-direction: column;
   
@@ -29,33 +23,75 @@
     transition: background-color 0.2s ease;
   }
   
-  /* Make the main area flex:1 so it expands and pushes the footer down */
+  /* The main area flex:1 so it expands and pushes the footer to the bottom */
   main {
     flex: 1;
+    /* 1) Ensure we have enough top padding so the fixed header doesn’t overlap content */
+    padding-top: 80px; /* match the header’s height to avoid overlap */
   }
   
-  /* ===== 2) Collapsible Sidebar ===== */
+  /* ===== 2) The Fixed Header ===== */
+  header {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    background-color: #555;
+    color: #fff;
+  
+    /* Make it appear above content */
+    z-index: 2000;
+  
+    /* Use a flex layout to arrange the menu button (left) and the title (center) */
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  /* The menu button on the left */
+  .menu-button {
+    background: transparent;
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 1rem; /* space between button and title */
+  }
+  
+  /* Center the h1 horizontally. 
+     We'll let the button be on the left with margin-right 
+     and h1 auto-margins to center. */
+  header h1 {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 90%; 
+    overflow-wrap: break-word;
+  }
+  
+  /* ===== 3) Collapsible Sidebar ===== */
   #sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px; /* default expanded width */
+    width: 260px; /* default expanded width for desktop */
     background-color: #000;
     color: #fff;
     overflow: hidden;
-    transition: width 0.3s ease;
-    z-index: 999;
+    transition: width 0.3s ease, transform 0.3s ease; 
+    z-index: 999; /* under the header but above main content */
   }
   
   #sidebar.expanded {
     width: 260px;
+    transform: translateX(0);
   }
+  
   #sidebar.collapsed {
     width: 40px;
   }
   
-  /* Inside the sidebar content */
+  /* .sidebar-content, nav, color picker, etc. remain the same */
   .sidebar-content {
     display: flex;
     flex-direction: column;
@@ -63,7 +99,7 @@
     padding: 1rem;
   }
   
-  /* The fold/unfold buttons */
+  /* The fold/unfold buttons inside the sidebar (desktop usage) */
   .fold-btn,
   .unfold-btn {
     background: transparent;
@@ -73,8 +109,6 @@
     cursor: pointer;
   }
   
-  /* The unfold button is absolutely positioned 
-     and only visible when collapsed. */
   #unfoldSidebarBtn {
     position: absolute;
     top: 1rem;
@@ -84,7 +118,6 @@
     display: none;
   }
   
-  /* Sidebar nav */
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -123,38 +156,23 @@
     cursor: pointer;
   }
   
-
-
-
-  /* ===== 3) Main Layout: shift content depending on sidebar width ===== */
+  /* ===== 4) Main Layout for DESKTOP: shift content if sidebar is expanded ===== */
+  /* By default, we push everything to the right by 260px. */
   header,
   main,
   footer {
-    margin-left: 260px; /* match #sidebar.expanded width */
-    padding: 1rem 2rem;
+    margin-left: 260px;
     transition: margin-left 0.3s ease;
   }
+  
+  /* If sidebar is collapsed, push just 40px. */
   #sidebar.collapsed ~ header,
   #sidebar.collapsed ~ main,
   #sidebar.collapsed ~ footer {
     margin-left: 40px;
   }
   
-  /* ===== 4) Header & Footer ===== */
-  header {
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    padding: 1.5rem;
-  }
-  
-  /* Ensure large text can wrap (1) */
-  header h1 {
-    margin: 0 auto;
-    max-width: 90%;  /* let the text wrap if it’s very long */
-    overflow-wrap: break-word;
-  }
-  
+  /* ===== 5) Footer ===== */
   footer {
     background-color: #333;
     color: #aaa;
@@ -163,7 +181,6 @@
     margin-top: 2rem; 
   }
   
-  /* Container for the icons in footer */
   .footer-links {
     display: flex;
     justify-content: center;
@@ -186,7 +203,7 @@
     margin-bottom: 0.5rem;
   }
   
-  /* ===== 5) Sections and Elements ===== */
+  /* ===== 6) Sections and Elements ===== */
   main {
     display: flex;
     flex-direction: column;
@@ -234,7 +251,7 @@
   #random-dog img {
     width: auto;
     max-width: 90%;
-    max-height: 300px; /* fix vertical size */
+    max-height: 300px;
     display: block;
     margin: 0 auto 1rem;
     object-fit: cover;
@@ -258,13 +275,11 @@
     background-color: #01447e;
   }
   
-
-  
-  /* Example label for the gallery toggle checkbox */
+  /* ===== Switch for Gallery ===== */
   .switch-container {
     display: inline-block;
     position: relative;
-    /* vertical-align: middle;  etc. */
+    margin-top: 0.5rem;
   }
   
   .switch-container input[type="checkbox"] {
@@ -273,10 +288,9 @@
     height: 0;
   }
   
-  /* The "slider" */
   .switch-label {
     cursor: pointer;
-    text-indent: -9999px;  /* hide text visually if you want an icon only */
+    text-indent: -9999px; 
     width: 50px;
     height: 24px;
     background: #ccc;
@@ -284,11 +298,8 @@
     border-radius: 24px;
     position: relative;
     transition: background 0.3s;
-    /* If you want to still show "Grid View" text, 
-       omit text-indent and handle your spacing differently. */
   }
   
-  /* The circle knob inside the slider */
   .switch-label::after {
     content: "";
     position: absolute;
@@ -301,15 +312,12 @@
     transition: transform 0.3s;
   }
   
-  /* When the checkbox is checked, move the knob to the right + change color */
   .switch-container input[type="checkbox"]:checked + .switch-label {
-    background: #66bb6a; /* some "on" color */
+    background: #66bb6a;
   }
-  
   .switch-container input[type="checkbox"]:checked + .switch-label::after {
-    transform: translateX(26px); /* knob slides to the right */
+    transform: translateX(26px);
   }
-  
   
   /* ===== Photo Gallery Layouts ===== */
   .photo-gallery {
@@ -320,7 +328,7 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
-    overflow-x: auto;  /* horizontal scroll if needed */
+    overflow-x: auto;
     justify-content: flex-start;
     align-items: center;
   }
@@ -354,41 +362,35 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.8);
-    display: flex;  /* center content */
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;  
+    z-index: 1000;
   }
   #lightbox.hidden {
     display: none;
   }
   
-  /* Lightbox content container */
   .lightbox-content {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* 5) Let’s give more explicit max dimensions
-       so vertical images don’t flow out of the page. */
     max-width: 90%;
     max-height: 90%;
   }
   
-  /* The displayed image in the lightbox */
   #lightboxImg {
-    width: auto;        /* no forced width */
-    height: auto;       /* no forced height */
-    max-width: 90vw;    /* up to 90% of viewport width */
-    max-height: 90vh;   /* up to 90% of viewport height */
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 90vh;
     object-fit: contain;
     display: block;
     border: 4px solid #fff;
     border-radius: 4px;
   }
   
-  
-  /* Close button (X) */
   .lightbox-close {
     position: absolute;
     top: -40px;
@@ -398,7 +400,6 @@
     cursor: pointer;
   }
   
-  /* Left/Right arrow buttons */
   .lightbox-arrow {
     color: #fff;
     font-size: 3rem;
@@ -426,30 +427,24 @@
     display: none;
   }
   
-  /* ===== 6) Media Query for smaller screens ===== */
-  /* Example: For screens 600px or below, let’s overlay the sidebar 
-   instead of pushing main content. */
+  /* ===== 7) Media Query for smaller screens ===== */
   @media (max-width: 600px) {
+    /* Overlay the sidebar on small screens. */
     #sidebar {
-      position: fixed;     /* overlay it */
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 200px;        /* or 260px if you prefer */
+      width: 200px;
       transform: translateX(-100%); /* hidden by default */
-      transition: transform 0.3s ease;
-      z-index: 9999;       /* above main content */
     }
   
-    /* When “expanded,” transform to show it. */
     #sidebar.expanded {
       transform: translateX(0);
     }
   
-    /* Also, remove the margin-left from header, main, footer on small screens: */
-    header, main, footer {
+    /* On mobile, remove the margin-left from the content 
+       so it does NOT shift when the sidebar expands. */
+    header,
+    main,
+    footer {
       margin-left: 0 !important;
     }
   }
-  
   

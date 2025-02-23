@@ -26,10 +26,10 @@
   </script>
 </head>
 <body>
-<!-- ===== SIDEBAR (collapsible) ===== -->
+  <!-- ===== SIDEBAR (collapsible) ===== -->
   <aside id="sidebar" class="expanded">
     <div class="sidebar-content">
-      <button id="toggleSidebarBtn" class="fold-btn">⏴</button>
+      <!-- (Removed the old toggleSidebarBtn here) -->
       <nav>
         <ul>
           <li><a href="#about">About Me</a></li>
@@ -44,15 +44,20 @@
         <input type="color" id="colorPicker" value="#ff0000">
       </div>
     </div>
-    <!-- This appears only when sidebar is collapsed -->
+    <!-- Unfold button is still here for desktop usage if needed -->
     <button id="unfoldSidebarBtn" class="unfold-btn hidden">⏵</button>
   </aside>
 
-  <!-- ===== MAIN PAGE CONTENT ===== -->
+  <!-- ===== FIXED HEADER ===== -->
   <header>
-    <h1>Welcome to My Personal Homepage</h1>
+    <!-- 1) Menu button on the left side -->
+    <button id="toggleSidebarBtn" class="menu-button">☰</button>
+
+    <!-- 2) Header text in the center -->
+    <h1>Welcome to Yize Lu's Homepage</h1>
   </header>
 
+  <!-- ===== MAIN PAGE CONTENT ===== -->
   <main>
     <!-- About Me section -->
     <section id="about">
@@ -92,8 +97,7 @@
     <section id="photography">
       <h2>My Photography Albums</h2>
       
-      <!-- 4) Use a “duality” UI instead of a single toggle button: e.g., a checkbox -->
-      <label for="galleryToggle" class="toggle-label">Grid View</label>
+      <!-- Switch for grid vs. single-row (checkbox visually hidden) -->
       <div class="switch-container">
         <input type="checkbox" id="galleryToggle" />
         <label for="galleryToggle" class="switch-label">Grid View</label>

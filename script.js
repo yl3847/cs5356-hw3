@@ -15,9 +15,7 @@ function fetchRandomDogImage() {
     });
 }
 
-// Fetch a new dog image on button click
 getDogBtn.addEventListener("click", fetchRandomDogImage);
-// Optionally, fetch on page load
 window.addEventListener("load", fetchRandomDogImage);
 
 
@@ -38,16 +36,13 @@ if (closeDialogBtn) {
  *  3) PHOTOGRAPHY GALLERY: Single Row vs. Grid + Lightbox
  ********************************************************/
 const photoGallery = document.getElementById("photoGallery");
-/* Instead of toggleGalleryBtn, we now have a checkbox */
 const galleryToggle = document.getElementById("galleryToggle");
 
-// Build an array of local photos
 const photoURLs = [];
 for (let i = 1; i <= 26; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
 }
 
-// Create <img> elements for each photo
 photoURLs.forEach((url, index) => {
   const img = document.createElement("img");
   img.src = url;
@@ -58,19 +53,15 @@ photoURLs.forEach((url, index) => {
   photoGallery.appendChild(img);
 });
 
-// Default is single-row layout
 photoGallery.classList.add("single-row");
 let isGridView = false;
 
-/* Listen for checkbox changes */
 galleryToggle.addEventListener("change", (e) => {
   if (e.target.checked) {
-    // Switch to grid layout
     photoGallery.classList.remove("single-row");
     photoGallery.classList.add("grid-layout");
     isGridView = true;
   } else {
-    // Switch back to single-row layout
     photoGallery.classList.remove("grid-layout");
     photoGallery.classList.add("single-row");
     isGridView = false;
@@ -105,22 +96,19 @@ lightboxNext.addEventListener("click", () => {
   lightboxImg.src = photoURLs[currentPhotoIndex];
 });
 
-
+// Keyboard left/right arrow for lightbox
 document.addEventListener("keydown", (e) => {
-    // Only do this if the lightbox is currently shown
-    if (!lightbox.classList.contains("hidden")) {
-      if (e.key === "ArrowLeft") {
-        // Go to previous photo
-        currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
-        lightboxImg.src = photoURLs[currentPhotoIndex];
-      } else if (e.key === "ArrowRight") {
-        // Go to next photo
-        currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
-        lightboxImg.src = photoURLs[currentPhotoIndex];
-      }
+  if (!lightbox.classList.contains("hidden")) {
+    if (e.key === "ArrowLeft") {
+      currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
+      lightboxImg.src = photoURLs[currentPhotoIndex];
+    } else if (e.key === "ArrowRight") {
+      currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
+      lightboxImg.src = photoURLs[currentPhotoIndex];
     }
-  });
-  
+  }
+});
+
 
 /********************************************************
  *  4) COLLAPSIBLE SIDEBAR
@@ -130,14 +118,20 @@ const toggleSidebarBtn = document.getElementById("toggleSidebarBtn");
 const unfoldSidebarBtn = document.getElementById("unfoldSidebarBtn");
 
 toggleSidebarBtn.addEventListener("click", () => {
+  // Hide the "expanded" state => become "collapsed"
   sidebar.classList.remove("expanded");
   sidebar.classList.add("collapsed");
+
+  // Show the unfold button on desktop
   unfoldSidebarBtn.classList.remove("hidden");
 });
 
 unfoldSidebarBtn.addEventListener("click", () => {
+  // Hide the "collapsed" state => become "expanded"
   sidebar.classList.remove("collapsed");
   sidebar.classList.add("expanded");
+
+  // Hide the unfold button on desktop
   unfoldSidebarBtn.classList.add("hidden");
 });
 
@@ -185,7 +179,6 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
-// Initialize from default colorPicker value
 colorPicker.dispatchEvent(new Event("input"));
 
 document.addEventListener("mousemove", (event) => {
@@ -199,11 +192,3 @@ document.addEventListener("mousemove", (event) => {
 
   document.body.style.backgroundColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
 });
-
-/* 
-Optionally, to also track finger movement on mobile, 
-you could add a 'touchmove' listener:
-document.addEventListener("touchmove", (event) => {
-  // do similar logic
-});
-*/
