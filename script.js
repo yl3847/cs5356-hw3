@@ -106,6 +106,22 @@ lightboxNext.addEventListener("click", () => {
 });
 
 
+document.addEventListener("keydown", (e) => {
+    // Only do this if the lightbox is currently shown
+    if (!lightbox.classList.contains("hidden")) {
+      if (e.key === "ArrowLeft") {
+        // Go to previous photo
+        currentPhotoIndex = (currentPhotoIndex - 1 + photoURLs.length) % photoURLs.length;
+        lightboxImg.src = photoURLs[currentPhotoIndex];
+      } else if (e.key === "ArrowRight") {
+        // Go to next photo
+        currentPhotoIndex = (currentPhotoIndex + 1) % photoURLs.length;
+        lightboxImg.src = photoURLs[currentPhotoIndex];
+      }
+    }
+  });
+  
+
 /********************************************************
  *  4) COLLAPSIBLE SIDEBAR
  ********************************************************/

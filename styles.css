@@ -123,6 +123,9 @@
     cursor: pointer;
   }
   
+
+
+
   /* ===== 3) Main Layout: shift content depending on sidebar width ===== */
   header,
   main,
@@ -255,12 +258,58 @@
     background-color: #01447e;
   }
   
+
+  
   /* Example label for the gallery toggle checkbox */
-  .toggle-label {
+  .switch-container {
     display: inline-block;
-    margin-right: 0.5rem;
-    font-weight: bold;
+    position: relative;
+    /* vertical-align: middle;  etc. */
   }
+  
+  .switch-container input[type="checkbox"] {
+    opacity: 0; 
+    width: 0; 
+    height: 0;
+  }
+  
+  /* The "slider" */
+  .switch-label {
+    cursor: pointer;
+    text-indent: -9999px;  /* hide text visually if you want an icon only */
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    display: inline-block;
+    border-radius: 24px;
+    position: relative;
+    transition: background 0.3s;
+    /* If you want to still show "Grid View" text, 
+       omit text-indent and handle your spacing differently. */
+  }
+  
+  /* The circle knob inside the slider */
+  .switch-label::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 20px;
+    transition: transform 0.3s;
+  }
+  
+  /* When the checkbox is checked, move the knob to the right + change color */
+  .switch-container input[type="checkbox"]:checked + .switch-label {
+    background: #66bb6a; /* some "on" color */
+  }
+  
+  .switch-container input[type="checkbox"]:checked + .switch-label::after {
+    transform: translateX(26px); /* knob slides to the right */
+  }
+  
   
   /* ===== Photo Gallery Layouts ===== */
   .photo-gallery {
@@ -328,17 +377,16 @@
   
   /* The displayed image in the lightbox */
   #lightboxImg {
-    /* Instead of forcing width to fill, we use object-fit: contain
-       with max-height / max-width to ensure the entire image is visible. */
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    width: auto;        /* no forced width */
+    height: auto;       /* no forced height */
+    max-width: 90vw;    /* up to 90% of viewport width */
+    max-height: 90vh;   /* up to 90% of viewport height */
     object-fit: contain;
     display: block;
     border: 4px solid #fff;
     border-radius: 4px;
   }
+  
   
   /* Close button (X) */
   .lightbox-close {
@@ -379,23 +427,29 @@
   }
   
   /* ===== 6) Media Query for smaller screens ===== */
+  /* Example: For screens 600px or below, let’s overlay the sidebar 
+   instead of pushing main content. */
   @media (max-width: 600px) {
-    #sidebar.expanded {
-      width: 200px;
-    }
-    #sidebar.collapsed {
-      width: 40px;
-    }
-    
-    #sidebar.collapsed ~ header,
-    #sidebar.collapsed ~ main,
-    #sidebar.collapsed ~ footer {
-      margin-left: 40px;
+    #sidebar {
+      position: fixed;     /* overlay it */
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 200px;        /* or 260px if you prefer */
+      transform: translateX(-100%); /* hidden by default */
+      transition: transform 0.3s ease;
+      z-index: 9999;       /* above main content */
     }
   
-    /* Make the header text smaller or wrap more aggressively on mobile */
-    header h1 {
-      font-size: 1.2rem;
+    /* When “expanded,” transform to show it. */
+    #sidebar.expanded {
+      transform: translateX(0);
+    }
+  
+    /* Also, remove the margin-left from header, main, footer on small screens: */
+    header, main, footer {
+      margin-left: 0 !important;
     }
   }
+  
   

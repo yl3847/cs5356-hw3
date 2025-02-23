@@ -93,8 +93,11 @@
       <h2>My Photography Albums</h2>
       
       <!-- 4) Use a “duality” UI instead of a single toggle button: e.g., a checkbox -->
-      <label for="galleryToggle" class="toggle-label">Grid View?</label>
-      <input type="checkbox" id="galleryToggle" />
+      <label for="galleryToggle" class="toggle-label">Grid View</label>
+      <div class="switch-container">
+        <input type="checkbox" id="galleryToggle" />
+        <label for="galleryToggle" class="switch-label">Grid View</label>
+      </div>
 
       <!-- Container for the photo thumbnails; default is single-row view -->
       <div id="photoGallery" class="photo-gallery single-row">
