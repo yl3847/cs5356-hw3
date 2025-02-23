@@ -117,8 +117,8 @@ lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
   if (Math.abs(diff) > 50) {
-    if (diff < 0) showNextPhoto(); // swiped left
-    else showPrevPhoto();          // swiped right
+    if (diff < 0) showNextPhoto(); // swiped left => next
+    else showPrevPhoto();          // swiped right => prev
   }
 });
 
@@ -130,6 +130,7 @@ const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 
 menuBtn.addEventListener("click", () => {
+  // Toggle
   if (sidebar.classList.contains("expanded")) {
     sidebar.classList.remove("expanded");
     sidebar.classList.add("collapsed");
@@ -137,16 +138,16 @@ menuBtn.addEventListener("click", () => {
     sidebar.classList.remove("collapsed");
     sidebar.classList.add("expanded");
   }
+  // (4) Immediately remove focus so the button 
+  //     does not remain "blue" after clicking.
+  menuBtn.blur();
 });
 
-/* (4) On smartphone: fold sidebar by swiping left.
-   We'll detect a left swipe *only if* it's currently expanded. */
-
+// On smartphone: fold sidebar by swiping left
 let sideStartX = 0;
 let sideEndX = 0;
 
 sidebar.addEventListener("touchstart", (e) => {
-  // Only consider if sidebar is expanded
   if (sidebar.classList.contains("expanded")) {
     sideStartX = e.changedTouches[0].clientX;
   }

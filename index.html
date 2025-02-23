@@ -35,6 +35,7 @@
           <li><a href="#photography">Photography</a></li>
         </ul>
       </nav>
+      <!-- Color picker section, no longer stuck at bottom -->
       <div class="color-picker-section">
         <label for="colorPicker">Base Hue:</label>
         <input type="color" id="colorPicker" value="#ff0000" />
@@ -83,14 +84,13 @@
     <!-- Photography -->
     <section id="photography">
       <h2>My Photography Albums</h2>
-
       <!-- 
-         A row container for "Grid Mode" text and the switch.
-         Ensures they're horizontally aligned (平行的).
+           A row container for "Grid Mode" text and the switch.
+           They must stay on the same line (平行).
       -->
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
-        
+
         <div class="switch-container">
           <input type="checkbox" id="galleryToggle" />
           <label for="galleryToggle" class="switch-label"></label>

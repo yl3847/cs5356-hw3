@@ -33,7 +33,7 @@
     color: #fff;
     overflow: hidden;
     transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 1500; /* below the header on desktop by default */
+    z-index: 1500; /* below the header on desktop */
   }
   #sidebar.expanded {
     width: 260px;
@@ -48,6 +48,19 @@
     flex-direction: column;
     height: 100%;
     padding: 1rem;
+  }
+  /* 
+    Removed margin-top: auto so the color-picker 
+    is not pinned to the bottom (prevents being blocked on phone).
+  */
+  .color-picker-section {
+    margin-top: 1rem;
+    border-top: 1px solid #444;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
   nav ul {
     list-style: none;
@@ -65,15 +78,6 @@
   nav a:hover {
     text-decoration: underline;
   }
-  .color-picker-section {
-    margin-top: auto;
-    border-top: 1px solid #444;
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
   
   /* ===== HEADER (FIXED) ===== */
   header {
@@ -81,7 +85,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px; /* desktop header height */
+    height: 70px; /* desktop */
     background-color: #555;
     color: #fff;
     display: flex;
@@ -97,6 +101,8 @@
     font-size: 1.5rem;
     cursor: pointer;
     margin-right: 1rem;
+    /* remove focus outline so it doesn't stay blue */
+    outline: none;
   }
   header h1 {
     margin: 0 auto;
@@ -195,52 +201,55 @@
   button:hover {
     background-color: #025aa5;
   }
+  button:focus,
   button:active {
-    background-color: #01447e;
+    outline: none; /* remove dotted outline on focus if needed */
   }
   
   /* ===== GRID MODE SWITCH ===== */
   .grid-mode-row {
-    /* Force them on the same line */
+    /* Must ensure they share the same baseline / alignment
+       and also enough margin so it doesn't overlap photos. */
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin: 0.5rem 0;
+    gap: 0.75rem;
+    margin: 1rem 0; /* bigger margin so it doesn't intrude on photos */
   }
   .grid-mode-label {
     font-weight: bold;
-    margin: 0; /* ensure no extra line break */
+    margin: 0;
+    line-height: 1.4;
   }
   .switch-container {
     position: relative;
-    width: 48px;
-    height: 24px;
+    width: 52px;  /* made switch bigger/taller to ensure no overlap */
+    height: 28px;
   }
   .switch-container input[type="checkbox"] {
     opacity: 0;
     width: 0;
     height: 0;
+    margin: 0;
   }
   .switch-label {
     cursor: pointer;
     background: #ccc;
-    border-radius: 24px;
-    display: inline-block; /* inline-block so it doesn't drop below the label */
+    border-radius: 28px;
+    display: inline-block;
     width: 100%;
     height: 100%;
     position: relative;
     transition: background 0.3s;
-    /* removed text-indent since there's no text to hide */
   }
   .switch-label::after {
     content: "";
     position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 20px;
-    height: 20px;
+    left: 3px;
+    top: 3px;
+    width: 22px;
+    height: 22px;
     background: #fff;
-    border-radius: 20px;
+    border-radius: 22px;
     transition: transform 0.3s;
   }
   .switch-container input[type="checkbox"]:checked + .switch-label {
@@ -362,31 +371,25 @@
   
   /* ===== SMARTPHONE (≤600px) ===== */
   @media (max-width: 600px) {
-    /* (2) Lower font-size so it doesn't overflow */
     header h1 {
       font-size: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    /* shorter header height */
     header {
       height: 50px;
       z-index: 9999; /* ensure the header is above the sidebar so we can press menuBtn */
     }
-    /* push main content so it doesn't hide behind the 50px header */
     main {
-      margin-top: 50px;
+      margin-top: 50px; /* to avoid header overlap */
     }
   
-    /* 
-       Let the sidebar be narrower, 
-       and push it below the header (top:50px) so its first row isn't hidden.
-    */
+    /* Let sidebar be narrower, just enough for "Photography" */
     #sidebar {
-      top: 50px;
-      width: 120px; /* narrower so no big gap */
-      z-index: 2000; /* below header */
+      top: 50px;    /* so it starts below header */
+      width: 110px; /* narrower - minimal gap */
+      z-index: 2000;/* below header */
       transform: translateX(-100%);
     }
     #sidebar.expanded {
@@ -396,10 +399,7 @@
       transform: translateX(-100%);
     }
   
-    /*
-      Do not shift main/ header / footer horizontally on phone:
-      margin-left:0
-    */
+    /* No horizontal shift for main on phone */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -409,7 +409,6 @@
       margin-left: 0 !important;
     }
   
-    /* Move lightbox arrows a bit closer for small screens */
     .lightbox-arrow.left {
       left: -30px;
     }
