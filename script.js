@@ -37,7 +37,7 @@ const photoGallery = document.getElementById("photoGallery");
 const galleryToggle = document.getElementById("galleryToggle");
 
 const photoURLs = [];
-for (let i = 1; i <= 26; i++) {
+for (let i = 1; i <=68; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
 }
 
