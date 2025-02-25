@@ -57,16 +57,18 @@ photoGallery.classList.add("single-row");
 let isGridView = false;
 
 galleryToggle.addEventListener("change", () => {
-  if (galleryToggle.checked) {
-    photoGallery.classList.remove("single-row");
-    photoGallery.classList.add("grid-layout");
-    isGridView = true;
-  } else {
-    photoGallery.classList.remove("grid-layout");
-    photoGallery.classList.add("single-row");
-    isGridView = false;
-  }
-});
+    if (galleryToggle.checked) {
+      photoGallery.classList.remove("single-row");
+      photoGallery.classList.add("grid-layout");
+      photoGallery.scrollLeft = 0; // Reset scroll position
+      isGridView = true;
+    } else {
+      photoGallery.classList.remove("grid-layout");
+      photoGallery.classList.add("single-row");
+      isGridView = false;
+    }
+  });
+  
 
 /********************************************************
  *  4) LIGHTBOX
