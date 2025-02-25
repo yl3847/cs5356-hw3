@@ -245,28 +245,19 @@ document.addEventListener("mousemove", (event) => {
 document.addEventListener("DOMContentLoaded", function() {
     const sections = document.querySelectorAll("section");
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -10% 0px"
+      // Lower threshold so that on mobile the section is considered out of view sooner.
+      threshold: 0.05
     };
-    
+  
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // For the photography section, if grid mode is active, always reveal.
-        if (entry.target.id === "photography") {
-          if (document.getElementById("photoGallery").classList.contains("grid-layout")) {
-            entry.target.classList.add("reveal");
-            return; // Skip further processing for this section.
-          }
-        }
-        
-        // On mobile devices (<=600px), add "reveal" when visible and never remove it.
-        if (window.innerWidth <= 600) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-          }
-          // Do nothing if not intersecting.
+        // If it's the photography section and grid mode is active, always show it.
+        if (
+          entry.target.id === "photography" &&
+          document.getElementById("photoGallery").classList.contains("grid-layout")
+        ) {
+          entry.target.classList.add("reveal");
         } else {
-          // Desktop: Toggle "reveal" based on intersection.
           if (entry.isIntersecting) {
             entry.target.classList.add("reveal");
           } else {
@@ -275,12 +266,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       });
     }, observerOptions);
-    
+  
     sections.forEach(section => {
       observer.observe(section);
     });
   });
-  
   
   
   
