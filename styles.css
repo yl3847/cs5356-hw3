@@ -435,7 +435,7 @@
        then slide it off-screen by moving it left by 100% of its own width */
     #sidebar {
       top: 50px;
-      width: 95px;  /* fixed width for content */
+      width: 160px;  /* fixed width for content */
       padding: 0.5rem;
       z-index: 2000;
       transform: translateX(-100%);
