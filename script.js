@@ -244,25 +244,40 @@ document.addEventListener("mousemove", (event) => {
 
 document.addEventListener("DOMContentLoaded", function() {
     const sections = document.querySelectorAll("section");
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -10% 0px"
+    };
+    
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // If this is the photography section and grid mode is active, always show it.
+        // For the photography section in grid mode, always reveal it
         if (entry.target.id === "photography" && document.getElementById("photoGallery").classList.contains("grid-layout")) {
           entry.target.classList.add("reveal");
         } else {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
+          // On mobile devices, always add "reveal" once it enters view
+          if (window.innerWidth <= 600) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("reveal");
+            }
+            // Do not remove the class on mobile, so it stays revealed
           } else {
-            entry.target.classList.remove("reveal");
+            // On desktop, toggle the class as usual
+            if (entry.isIntersecting) {
+              entry.target.classList.add("reveal");
+            } else {
+              entry.target.classList.remove("reveal");
+            }
           }
         }
       });
-    }, { threshold: 0.1 });
+    }, observerOptions);
     
     sections.forEach(section => {
       observer.observe(section);
     });
   });
+  
   
   
   
