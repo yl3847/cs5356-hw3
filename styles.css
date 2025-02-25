@@ -306,6 +306,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     grid-gap: 1rem;
+    overflow-x: visible;
   }
   .grid-layout img {
     width: 100%;
@@ -481,6 +482,12 @@
     }
   }
   
+  /* Mobile adjustments for grid mode */
+  @media (max-width: 600px) {
+    .photo-gallery.grid-layout {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+  }
   
   /* Hidden Contact Section */
   .hidden-contact {
