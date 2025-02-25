@@ -248,8 +248,8 @@ document.addEventListener("DOMContentLoaded", function() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("reveal");
-        } else {
-          entry.target.classList.remove("reveal");
+          // Once revealed, stop observing this section
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
@@ -258,6 +258,7 @@ document.addEventListener("DOMContentLoaded", function() {
       observer.observe(section);
     });
   });
+  
   
 
 
