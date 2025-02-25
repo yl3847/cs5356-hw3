@@ -236,3 +236,39 @@ document.addEventListener("mousemove", (event) => {
 
   document.body.style.backgroundColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("reveal");
+        } else {
+          entry.target.classList.remove("reveal");
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  });
+  
+
+
+  // Auto-scroll photo gallery when in non-grid (single-row) mode
+setInterval(function() {
+    const gallery = document.getElementById("photoGallery");
+    if (gallery && gallery.classList.contains("single-row")) {
+      // Check if we've reached the end; if so, reset to beginning.
+      if (gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth) {
+        gallery.scrollLeft = 0;
+      } else {
+        gallery.scrollLeft += 1; // Adjust this value for desired speed.
+      }
+    }
+  }, 50); // Runs every 50ms; adjust interval as needed.
+  
