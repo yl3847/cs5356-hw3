@@ -246,10 +246,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        // If this is the photography section and grid mode is active, always show it.
+        if (entry.target.id === "photography" && document.getElementById("photoGallery").classList.contains("grid-layout")) {
           entry.target.classList.add("reveal");
-          // Once revealed, stop observing this section
-          observer.unobserve(entry.target);
+        } else {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal");
+          } else {
+            entry.target.classList.remove("reveal");
+          }
         }
       });
     }, { threshold: 0.1 });
@@ -258,6 +263,7 @@ document.addEventListener("DOMContentLoaded", function() {
       observer.observe(section);
     });
   });
+  
   
   
 
