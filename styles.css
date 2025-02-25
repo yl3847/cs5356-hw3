@@ -22,27 +22,28 @@
     margin-top: 70px; /* offset for the header (desktop) */
   }
   
-  /* ===== 2) SIDEBAR ===== */
+  /* ===== 2) SIDEBAR (Desktop) ===== */
   #sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px;
+    width: 260px; /* Fixed width */
     background-color: #000;
     color: #fff;
     overflow: hidden;
-    transition: width 0.3s ease, transform 0.3s ease;
+    transition: transform 0.3s ease;
     z-index: 1500;
   }
+  
   #sidebar.expanded {
-    width: 260px;
     transform: translateX(0);
   }
+  
   #sidebar.collapsed {
-    width: 40px;
-    transform: translateX(0);
+    transform: translateX(-260px);  /* Entire sidebar slides off-screen */
   }
+  
   .sidebar-content {
     display: flex;
     flex-direction: column;
@@ -411,7 +412,7 @@
     #sidebar.collapsed ~ header,
     #sidebar.collapsed ~ main,
     #sidebar.collapsed ~ footer {
-      margin-left: 40px;
+      margin-left: 0;   /* No gap when sidebar is hidden */
     }
   }
   
@@ -430,20 +431,22 @@
     main {
       margin-top: 50px;
     }
-    /* Let sidebar wrap its content tightly */
+    /* Let sidebar wrap its content tightly and slide completely off-screen */
     #sidebar {
       top: 50px;
       width: auto;
       padding: 0.5rem;
       z-index: 2000;
-      transform: translateX(-100%);
+      transform: translateX(-100vw);  /* slide completely off-screen */
+      transition: transform 0.3s ease;
     }
     #sidebar.expanded {
       transform: translateX(0);
     }
     #sidebar.collapsed {
-      transform: translateX(-100%);
+      transform: translateX(-100vw);
     }
+    /* Ensure main content doesn't get affected */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -463,4 +466,5 @@
       max-height: 80vh;
     }
   }
+  
   
