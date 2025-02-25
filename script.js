@@ -251,23 +251,26 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // For the photography section in grid mode, always reveal it
-        if (entry.target.id === "photography" && document.getElementById("photoGallery").classList.contains("grid-layout")) {
-          entry.target.classList.add("reveal");
+        // For the photography section, if grid mode is active, always reveal.
+        if (entry.target.id === "photography") {
+          if (document.getElementById("photoGallery").classList.contains("grid-layout")) {
+            entry.target.classList.add("reveal");
+            return; // Skip further processing for this section.
+          }
+        }
+        
+        // On mobile devices (<=600px), add "reveal" when visible and never remove it.
+        if (window.innerWidth <= 600) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal");
+          }
+          // Do nothing if not intersecting.
         } else {
-          // On mobile devices, always add "reveal" once it enters view
-          if (window.innerWidth <= 600) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("reveal");
-            }
-            // Do not remove the class on mobile, so it stays revealed
+          // Desktop: Toggle "reveal" based on intersection.
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal");
           } else {
-            // On desktop, toggle the class as usual
-            if (entry.isIntersecting) {
-              entry.target.classList.add("reveal");
-            } else {
-              entry.target.classList.remove("reveal");
-            }
+            entry.target.classList.remove("reveal");
           }
         }
       });
@@ -277,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function() {
       observer.observe(section);
     });
   });
+  
   
   
   
