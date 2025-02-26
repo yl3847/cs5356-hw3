@@ -22,6 +22,12 @@
     margin-top: 70px; /* offset for the header (desktop) */
   }
   
+  /* 1A) SCROLL OFFSET FOR FIXED HEADER
+     So anchor links (#about, etc.) scroll so the header doesn't overlap. */
+  section[id] {
+    scroll-margin-top: 80px; /* or 70px, to match your header height */
+  }
+  
   /* ===== 2) SIDEBAR (Desktop) ===== */
   #sidebar {
     position: fixed;
@@ -33,24 +39,20 @@
     color: #fff;
     overflow: hidden;
     transition: transform 0.3s ease;
-    z-index: 3000;  /* Higher than header’s 2000, so it appears on top when expanded */
+    z-index: 3000;  /* So it appears over the header */
   }
-  
   #sidebar.expanded {
     transform: translateX(0);
   }
-  
   #sidebar.collapsed {
     transform: translateX(-260px);  /* Entire sidebar slides off-screen */
   }
-  
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: 1rem;
   }
-  
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -67,7 +69,6 @@
   nav a:hover {
     text-decoration: underline;
   }
-  
   .color-picker-section {
     margin-top: 1rem;
     border-top: 1px solid #444;
@@ -91,10 +92,9 @@
     align-items: center;
     padding: 0 1rem;
     box-sizing: border-box;
-    z-index: 2000; /* Lower than sidebar (3000), so sidebar covers header when expanded */
+    z-index: 2000; /* Lower than sidebar so sidebar can overlay it */
   }
-  
-  /* Menu button: will move horizontally when sidebar is expanded/collapsed */
+  /* Menu button slides horizontally to avoid being blocked by sidebar */
   .menu-btn {
     background: transparent;
     color: #fff;
@@ -104,15 +104,14 @@
     margin-right: 1rem;
     outline: none;
     transition: 
-      transform 0.3s ease, /* So it slides smoothly */
+      transform 0.3s ease,
       background 0.2s ease;
   }
   .menu-btn:hover,
   .menu-btn:active {
-    background-color: #0275d8; /* Blue background on hover/active */
+    background-color: #0275d8; 
   }
-  
-  /* Center the H1 text in the header horizontally */
+  /* Center H1 */
   header h1 {
     margin: 0 auto;
     text-align: center;
@@ -120,27 +119,21 @@
     overflow-wrap: break-word;
   }
   
-  /******************************************************
-    3A) SHIFT ONLY THE MENU BUTTON (NOT THE WHOLE HEADER)
-  ******************************************************/
+  /* SHIFT ONLY THE MENU BUTTON (NOT ENTIRE HEADER) */
   @media (min-width: 601px) {
-    /* When sidebar is expanded, push .menu-btn to the right by 260px. */
     #sidebar.expanded ~ header .menu-btn {
       transform: translateX(260px);
     }
-    /* When sidebar is collapsed, reset the button’s position. */
     #sidebar.collapsed ~ header .menu-btn {
       transform: translateX(0);
     }
   }
   
-  /******************************************************
-    3B) MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED
-  ******************************************************/
+  /* MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED */
   @media (min-width: 601px) {
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer {
-      margin-left: 260px; /* same offset as the sidebar width */
+      margin-left: 260px;
     }
     #sidebar.collapsed ~ main,
     #sidebar.collapsed ~ footer {
@@ -149,12 +142,12 @@
   }
   
   /******************************************************
-    HERO SECTION: BACKGROUND = LUGU LAKE PHOTO
+    HERO SECTION
   ******************************************************/
   .hero {
     position: relative;
     width: 100%;
-    min-height: 50vh; /* Adjust as desired */
+    min-height: 50vh; /* default for desktop - can adjust */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,37 +156,31 @@
     border-radius: 0;
     margin: 0;
     margin-top: 70px; /* So it sits below your fixed header */
-    
+  
     background: 
-      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), /* Dark overlay gradient */
+      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
       url("./images/myphoto.jpg") center/cover no-repeat;
   }
-  
   .hero-overlay {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     background-color: rgba(0,0,0,0.3);
-    pointer-events: none; /* Clicks pass through */
+    pointer-events: none;
   }
-  
   .hero-content {
     position: relative;
     color: #fff;
-    max-width: 700px;  /* Constrain text width */
-    margin: 0 1rem;    /* Some side padding for mobile */
+    max-width: 700px;
+    margin: 0 1rem;
   }
-  
   .hero-content h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
   }
-  
   .hero-subtext {
     font-size: 1.2rem;
     margin-bottom: 2rem;
   }
-  
-  /* Hero Button styling */
   .hero-cta {
     background-color: #f6d743;
     color: #333;
@@ -330,12 +317,12 @@
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
-    line-height: 26px;  /* Ensure text aligns with 26px-high switch */
+    line-height: 26px;
   }
   .switch-container {
     width: 50px;
     height: 26px;
-    display: flex; /* Use flex to center content */
+    display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -431,7 +418,6 @@
     max-width: 90%;
     max-height: 90%;
   }
-  /* Container to wrap the image and position zoom controls */
   .lightbox-img-container {
     position: relative;
     display: inline-block;
@@ -447,7 +433,6 @@
     border-radius: 4px;
     transform-origin: center center;
   }
-  /* Zoom controls positioned at bottom-right of the image */
   #zoomControls {
     position: absolute;
     bottom: 0;
@@ -471,31 +456,29 @@
   .zoom-btn:hover {
     background-color: #666;
   }
-  /* Left/Right arrow buttons */
   .lightbox-arrow {
-    position: fixed; /* Fixed relative to the viewport */
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     color: #fff;
-    font-size: 3.5rem; /* Increased size */
+    font-size: 3.5rem;
     cursor: pointer;
     user-select: none;
-    padding: 0.5rem; /* Extra clickable area */
-    background: rgba(0, 0, 0, 0.3); /* Slight background for contrast */
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     z-index: 3100;
   }
   .lightbox-arrow.left {
-    left: 20px; /* Fixed distance from left viewport edge */
+    left: 20px;
   }
   .lightbox-arrow.right {
-    right: 20px; /* Fixed distance from right viewport edge */
+    right: 20px;
   }
-  /* LIGHTBOX CLOSE BUTTON */
   .lightbox-close {
     position: absolute;
-    top: 10px; /* Moved inside lightbox content */
-    right: 10px; /* Moved inside lightbox content */
+    top: 10px;
+    right: 10px;
     color: #fff;
     font-size: 2rem;
     cursor: pointer;
@@ -503,13 +486,14 @@
   }
   
   /* ===== 9) DESKTOP (≥601px) ===== */
-  /* We have replaced the old margin-left logic for header with the new approach above. */
+  /* No special changes needed beyond what's above */
   
   /* ===== 10) SMARTPHONE (≤600px) ===== */
   @media (max-width: 600px) {
+    /* Header smaller */
     header {
       height: 50px;
-      z-index: 100; /* lower than lightbox */
+      z-index: 100;
     }
     header h1 {
       font-size: 1rem;
@@ -523,7 +507,7 @@
     /* Sidebar shrinks in mobile */
     #sidebar {
       top: 50px;
-      width: 160px; /* fixed width for content */
+      width: 160px;
       padding: 0.5rem;
       z-index: 3000;
       transform: translateX(-100%);
@@ -535,7 +519,7 @@
     #sidebar.collapsed {
       transform: translateX(-100%);
     }
-    /* Ensure main content doesn't get affected in mobile */
+    /* Ensure main/footer not moved by sidebar on mobile */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -543,6 +527,17 @@
     #sidebar.collapsed ~ main,
     #sidebar.collapsed ~ footer {
       margin-left: 0 !important;
+    }
+    /* Hero smaller on mobile */
+    .hero {
+      min-height: 30vh; /* Instead of 50vh */
+    }
+    /* Timeline left space narrower */
+    .timeline::before {
+      left: 20px; /* was 40px */
+    }
+    .timeline-item {
+      padding-left: 60px; /* was 80px */
     }
     .lightbox-arrow.left {
       left: -30px;
@@ -555,8 +550,7 @@
       max-height: 80vh;
     }
   }
-  
-  /* Mobile adjustments for grid mode */
+  /* Adjust grid layout on very small screens */
   @media (max-width: 600px) {
     .photo-gallery.grid-layout {
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -567,7 +561,7 @@
   .hidden-contact {
     border: 2px solid #ddd;
     border-radius: 8px;
-    background-color: transparent; /* Inherit dynamic page background */
+    background-color: transparent;
     margin-top: 1rem;
     padding: 0.5rem;
   }
@@ -576,21 +570,20 @@
     font-weight: bold;
     cursor: pointer;
     padding: 0.6rem 1rem;
-    background: transparent; /* Use page background */
+    background: transparent;
     color: inherit;
     border: none;
     border-radius: 4px;
     user-select: none;
-    list-style: none; /* Remove default marker */
+    list-style: none;
     transition: background 0.3s ease;
   }
   .hidden-contact summary:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Subtle hover effect */
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .hidden-contact summary::-webkit-details-marker {
-    display: none; /* Hide default arrow marker */
+    display: none;
   }
-  /* Smooth unfolding/folding (0.5s transition) */
   .hidden-contact-content {
     max-height: 0;
     opacity: 0;
@@ -598,7 +591,7 @@
     transition: max-height 0.5s ease, opacity 0.5s ease;
   }
   .hidden-contact[open] .hidden-contact-content {
-    max-height: 200px; /* Adjust as needed */
+    max-height: 200px;
     opacity: 1;
   }
   .hidden-contact-content p {
@@ -627,49 +620,43 @@
     margin: 2rem 0;
     padding: 2rem 0;
   }
-  /* Vertical line running through the timeline */
   .timeline::before {
     content: "";
     position: absolute;
-    left: 40px; /* Adjust horizontal position of line */
+    left: 40px;
     top: 0;
     width: 2px;
     height: 100%;
     background-color: #ccc;
   }
-  /* === TIMELINE ITEMS === */
   .timeline-item {
     position: relative;
     margin: 2rem 0;
-    padding-left: 80px; /* So text doesn't overlap the timeline line */
-    opacity: 0;         /* For scroll animation; we'll reveal it later */
+    padding-left: 80px;
+    opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  /* Circle “node” on the timeline */
   .timeline-item::before {
     content: "";
     position: absolute;
-    left: 31px;         /* Center on the line (which is at 40px) */
+    left: 31px;
     background-color: #0275d8; 
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    top: 0; /* align with top of timeline-item content */
+    top: 0;
   }
-  /* Slide-in directions */
   .slide-in-left {
     transform: translateX(-50px);
   }
   .slide-in-right {
     transform: translateX(50px);
   }
-  /* Reveal timeline items */
   .timeline-item.reveal {
     opacity: 1;
     transform: translate(0, 0);
   }
-  /* Dates & content */
   .timeline-date {
     display: inline-block;
     font-size: 0.9rem;
@@ -684,7 +671,6 @@
   .timeline-content p {
     margin: 0.5rem 0 1rem;
   }
-  /* Toggle details in timeline */
   .toggle-details {
     display: inline-block;
     background-color: #0275d8;
