@@ -1,6 +1,6 @@
-/********************************************************
- *  1) RANDOM DOG IMAGE LOGIC
- ********************************************************/
+/**
+ * 1) RANDOM DOG IMAGE LOGIC
+ **/
 const dogImage = document.getElementById("dogImage");
 const getDogBtn = document.getElementById("getDogBtn");
 
@@ -18,9 +18,9 @@ function fetchRandomDogImage() {
 getDogBtn.addEventListener("click", fetchRandomDogImage);
 window.addEventListener("load", fetchRandomDogImage);
 
-/********************************************************
- *  2) DIALOG ELEMENT LOGIC
- ********************************************************/
+/**
+ * 2) DIALOG ELEMENT LOGIC
+ **/
 const cityDialog = document.getElementById("cityDialog");
 const closeDialogBtn = document.getElementById("closeDialogBtn");
 
@@ -30,14 +30,14 @@ if (closeDialogBtn) {
   });
 }
 
-/********************************************************
- *  3) PHOTOGRAPHY GALLERY: Single Row vs. Grid + Lightbox
- ********************************************************/
+/**
+ * 3) PHOTOGRAPHY GALLERY: Single Row vs. Grid + Lightbox
+ **/
 const photoGallery = document.getElementById("photoGallery");
 const galleryToggle = document.getElementById("galleryToggle");
 
 const photoURLs = [];
-for (let i = 1; i <=68; i++) {
+for (let i = 1; i <= 8; i++) {
   photoURLs.push(`./images/photo${i}.jpg`);
 }
 
@@ -57,22 +57,21 @@ photoGallery.classList.add("single-row");
 let isGridView = false;
 
 galleryToggle.addEventListener("change", () => {
-    if (galleryToggle.checked) {
-      photoGallery.classList.remove("single-row");
-      photoGallery.classList.add("grid-layout");
-      photoGallery.scrollLeft = 0; // Reset scroll position
-      isGridView = true;
-    } else {
-      photoGallery.classList.remove("grid-layout");
-      photoGallery.classList.add("single-row");
-      isGridView = false;
-    }
-  });
-  
+  if (galleryToggle.checked) {
+    photoGallery.classList.remove("single-row");
+    photoGallery.classList.add("grid-layout");
+    photoGallery.scrollLeft = 0; // Reset scroll position
+    isGridView = true;
+  } else {
+    photoGallery.classList.remove("grid-layout");
+    photoGallery.classList.add("single-row");
+    isGridView = false;
+  }
+});
 
-/********************************************************
- *  4) LIGHTBOX
- ********************************************************/
+/**
+ * 4) LIGHTBOX
+ **/
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
@@ -82,9 +81,10 @@ const lightboxNext = document.getElementById("lightboxNext");
 // Zoom controls
 const zoomInBtn = document.getElementById("zoomInBtn");
 const zoomOutBtn = document.getElementById("zoomOutBtn");
-let zoomFactor = 1; // default scale
 
+let zoomFactor = 1; // default scale
 let currentPhotoIndex = 0;
+
 function openLightbox(index) {
   currentPhotoIndex = index;
   zoomFactor = 1; // reset zoom on open/switch
@@ -125,9 +125,11 @@ document.addEventListener("keydown", (e) => {
 // Swipe navigation
 let touchStartX = 0;
 let touchEndX = 0;
+
 lightbox.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].clientX;
 });
+
 lightbox.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].clientX;
   const diff = touchEndX - touchStartX;
@@ -143,39 +145,43 @@ zoomInBtn.addEventListener("click", () => {
   if (zoomFactor > 5) zoomFactor = 5;
   applyZoom();
 });
+
 zoomOutBtn.addEventListener("click", () => {
   zoomFactor -= 0.2;
   if (zoomFactor < 0.2) zoomFactor = 0.2;
   applyZoom();
 });
+
 function applyZoom() {
   lightboxImg.style.transform = `scale(${zoomFactor})`;
 }
 
-/********************************************************
- *  5) COLLAPSIBLE SIDEBAR (MENU BUTTON)
- ********************************************************/
+/**
+ * 5) COLLAPSIBLE SIDEBAR (MENU BUTTON) - Enhanced with smoother animation
+ **/
 const sidebar = document.getElementById("sidebar");
 const menuBtn = document.getElementById("menuBtn");
 
 menuBtn.addEventListener("click", () => {
-    if (sidebar.classList.contains("expanded")) {
-      sidebar.classList.remove("expanded");
-      sidebar.classList.add("collapsed");
-    } else {
-      sidebar.classList.remove("collapsed");
-      sidebar.classList.add("expanded");
-    }
-    menuBtn.blur();
+  if (sidebar.classList.contains("expanded")) {
+    sidebar.classList.remove("expanded");
+    sidebar.classList.add("collapsed");
+  } else {
+    sidebar.classList.remove("collapsed");
+    sidebar.classList.add("expanded");
+  }
+  menuBtn.blur();
 });
 
 // On smartphone: fold sidebar by swiping left
 let sideStartX = 0;
+
 sidebar.addEventListener("touchstart", (e) => {
   if (sidebar.classList.contains("expanded")) {
     sideStartX = e.changedTouches[0].clientX;
   }
 });
+
 sidebar.addEventListener("touchend", (e) => {
   if (!sidebar.classList.contains("expanded")) return;
   const sideEndX = e.changedTouches[0].clientX;
@@ -186,9 +192,9 @@ sidebar.addEventListener("touchend", (e) => {
   }
 });
 
-/********************************************************
- *  6) BACKGROUND COLOR (HSL) via colorPicker
- ********************************************************/
+/**
+ * 6) BACKGROUND COLOR (HSL) via colorPicker
+ **/
 function hexToHSL(hex) {
   hex = hex.replace(/^#/, "");
   if (hex.length === 3) {
@@ -197,7 +203,7 @@ function hexToHSL(hex) {
   const r = parseInt(hex.slice(0, 2), 16) / 255;
   const g = parseInt(hex.slice(2, 4), 16) / 255;
   const b = parseInt(hex.slice(4, 6), 16) / 255;
-
+  
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
   let h, s, l = (max + min) / 2;
 
@@ -213,8 +219,10 @@ function hexToHSL(hex) {
     }
     h *= 60;
   }
+  
   s *= 100;
   l *= 100;
+  
   return { h: Math.round(h), s: Math.round(s), l: Math.round(l) };
 }
 
@@ -225,6 +233,7 @@ colorPicker.addEventListener("input", (e) => {
   const { h } = hexToHSL(e.target.value);
   baseHue = h;
 });
+
 colorPicker.dispatchEvent(new Event("input"));
 
 document.addEventListener("mousemove", (event) => {
@@ -232,113 +241,85 @@ document.addEventListener("mousemove", (event) => {
   const y = event.clientY;
   const width = window.innerWidth;
   const height = window.innerHeight;
-
+  
   const saturation = 30 + ((x / width) * 50);
-  const lightness  = 40 + ((y / height) * 20);
-
+  const lightness = 40 + ((y / height) * 20);
+  
   document.body.style.backgroundColor = `hsl(${baseHue}, ${saturation}%, ${lightness}%)`;
 });
 
-
-
-
+/**
+ * 7) SCROLL ANIMATIONS FOR SECTIONS
+ **/
 document.addEventListener("DOMContentLoaded", function() {
-    const sections = document.querySelectorAll("section");
-    const observerOptions = {
-      // Lower threshold so that on mobile the section is considered out of view sooner.
-      threshold: 0.05
-    };
+  const sections = document.querySelectorAll("section");
+  const timelineItems = document.querySelectorAll('.timeline-item');
   
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        // If it's the photography section and grid mode is active, always show it.
-        if (
-          entry.target.id === "photography" &&
-          document.getElementById("photoGallery").classList.contains("grid-layout")
-        ) {
+  const observerOptions = {
+    // Lower threshold so that on mobile the section is considered out of view sooner.
+    threshold: 0.05
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      // If it's the photography section and grid mode is active, always show it.
+      if (
+        entry.target.id === "photography" &&
+        document.getElementById("photoGallery").classList.contains("grid-layout")
+      ) {
+        entry.target.classList.add("reveal");
+      } else {
+        if (entry.isIntersecting) {
           entry.target.classList.add("reveal");
         } else {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("reveal");
-          } else {
-            entry.target.classList.remove("reveal");
-          }
+          entry.target.classList.remove("reveal");
         }
-      });
-    }, observerOptions);
-  
-    sections.forEach(section => {
-      observer.observe(section);
+      }
     });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
   });
   
-  
-  
-  
+  // Apply the same observer to timeline items
+  timelineItems.forEach(item => {
+    observer.observe(item);
+  });
+});
 
-
-  // Auto-scroll photo gallery when in non-grid (single-row) mode
+// Auto-scroll photo gallery when in non-grid (single-row) mode
 setInterval(function() {
-    const gallery = document.getElementById("photoGallery");
-    if (gallery && gallery.classList.contains("single-row")) {
-      // Check if we've reached the end; if so, reset to beginning.
-      if (gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth) {
-        gallery.scrollLeft = 0;
-      } else {
-        gallery.scrollLeft += 1; // Adjust this value for desired speed.
-      }
+  const gallery = document.getElementById("photoGallery");
+  if (gallery && gallery.classList.contains("single-row")) {
+    // Check if we've reached the end; if so, reset to beginning.
+    if (gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth) {
+      gallery.scrollLeft = 0;
+    } else {
+      gallery.scrollLeft += 1; // Adjust this value for desired speed.
     }
-  }, 50); // Runs every 50ms; adjust interval as needed.
-  
+  }
+}, 50); // Runs every 50ms; adjust interval as needed.
 
-  
-/*******************************************************
+/**
  * TOGGLE "READ MORE" DETAILS
- *******************************************************/
+ **/
 document.querySelectorAll('.toggle-details').forEach(button => {
-    button.addEventListener('click', () => {
-      const details = button.nextElementSibling; // The .project-details div
-      if (details.classList.contains('hidden')) {
-        details.classList.remove('hidden');
-        button.textContent = "Show Less";
-      } else {
-        details.classList.add('hidden');
-        button.textContent = "Read More";
-      }
-    });
+  button.addEventListener('click', () => {
+    const details = button.nextElementSibling; // The .project-details div
+    if (details.classList.contains('hidden')) {
+      details.classList.remove('hidden');
+      button.textContent = "Show Less";
+    } else {
+      details.classList.add('hidden');
+      button.textContent = "Read More";
+    }
   });
-  
-/*******************************************************
- * TIMELINE ITEMS REVEAL (Intersection Observer)
- *******************************************************/
-document.addEventListener('DOMContentLoaded', function() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-  
-    const observerOptions = {
-      threshold: 0.2
-    };
-  
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Add .reveal to trigger the CSS transition
-          entry.target.classList.add('reveal');
-        } else {
-          // Remove it if you want the animation to replay
-          // or keep it if you only want the animation once
-          entry.target.classList.remove('reveal');
-        }
-      });
-    }, observerOptions);
-  
-    timelineItems.forEach(item => {
-      observer.observe(item);
-    });
-  });
+});
 
-/**********************************************
+/**
  * HERO: Smooth Scroll to "About" 
- **********************************************/
+ **/
 const heroCtaBtn = document.getElementById("heroCtaBtn");
 if (heroCtaBtn) {
   heroCtaBtn.addEventListener("click", () => {
@@ -349,14 +330,14 @@ if (heroCtaBtn) {
   });
 }
 
-/**********************************************
+/**
  * OPTIONAL: Typewriter Effect for Hero H2
- **********************************************/
+ **/
 const heroTypewriterEl = document.getElementById("heroTypewriter");
 if (heroTypewriterEl) {
-  const heroText = "Hello, I’m Yize Lu, a full-stack developer in training…";
+  const heroText = "Hello, I'm Yize Lu, a full-stack developer in training…";
   let idx = 0;
-
+  
   function typeChar() {
     heroTypewriterEl.textContent = heroText.slice(0, idx);
     idx++;
@@ -364,7 +345,33 @@ if (heroTypewriterEl) {
       setTimeout(typeChar, 50); // Speed of typing (milliseconds)
     }
   }
-
+  
   // Initialize if the element is on the page
   typeChar();
 }
+
+/**
+ * 8) BACK TO TOP BUTTON
+ **/
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+// Show button when user scrolls down
+window.addEventListener("scroll", () => {
+  // Show the button after scrolling down 300px
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.remove("hidden");
+    backToTopBtn.classList.add("visible");
+  } else {
+    backToTopBtn.classList.remove("visible");
+    backToTopBtn.classList.add("hidden");
+  }
+});
+
+// Scroll to top when button is clicked
+backToTopBtn.addEventListener("click", () => {
+  // Smooth scroll to top
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
