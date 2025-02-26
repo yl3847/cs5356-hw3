@@ -17,15 +17,23 @@
     transition: background-color 0.2s ease;
   }
   
+  /* 
+     --- SCROLL OFFSET FOR HEADER ---
+     This ensures that when we jump to an anchor (#about, #project-experience, etc.), 
+     the top is offset by 70px so the header won't block it.
+  */
+  section {
+    scroll-margin-top: 70px; /* the header’s height */
+  }
+  @media (max-width: 600px) {
+    section {
+      scroll-margin-top: 50px; /* if header is 50px tall on mobile */
+    }
+  }
+  
   main {
     flex: 1;
     margin-top: 70px; /* offset for the header (desktop) */
-  }
-  
-  /* 1A) SCROLL OFFSET FOR FIXED HEADER
-     So anchor links (#about, etc.) scroll so the header doesn't overlap. */
-  section[id] {
-    scroll-margin-top: 80px; /* or 70px, to match your header height */
   }
   
   /* ===== 2) SIDEBAR (Desktop) ===== */
@@ -39,20 +47,24 @@
     color: #fff;
     overflow: hidden;
     transition: transform 0.3s ease;
-    z-index: 3000;  /* So it appears over the header */
+    z-index: 3000;  /* Higher than header's 2000, so it appears on top */
   }
+  
   #sidebar.expanded {
     transform: translateX(0);
   }
+  
   #sidebar.collapsed {
     transform: translateX(-260px);  /* Entire sidebar slides off-screen */
   }
+  
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: 1rem;
   }
+  
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -69,6 +81,7 @@
   nav a:hover {
     text-decoration: underline;
   }
+  
   .color-picker-section {
     margin-top: 1rem;
     border-top: 1px solid #444;
@@ -92,9 +105,10 @@
     align-items: center;
     padding: 0 1rem;
     box-sizing: border-box;
-    z-index: 2000; /* Lower than sidebar so sidebar can overlay it */
+    z-index: 2000; /* Lower than sidebar (3000) so the sidebar overlays it */
   }
-  /* Menu button slides horizontally to avoid being blocked by sidebar */
+  
+  /* Menu button: will move horizontally when sidebar is expanded/collapsed */
   .menu-btn {
     background: transparent;
     color: #fff;
@@ -104,14 +118,15 @@
     margin-right: 1rem;
     outline: none;
     transition: 
-      transform 0.3s ease,
+      transform 0.3s ease,  /* So it slides smoothly */
       background 0.2s ease;
   }
   .menu-btn:hover,
   .menu-btn:active {
-    background-color: #0275d8; 
+    background-color: #0275d8; /* Blue background on hover/active */
   }
-  /* Center H1 */
+  
+  /* Center the H1 text in the header horizontally */
   header h1 {
     margin: 0 auto;
     text-align: center;
@@ -119,7 +134,9 @@
     overflow-wrap: break-word;
   }
   
-  /* SHIFT ONLY THE MENU BUTTON (NOT ENTIRE HEADER) */
+  /******************************************************
+    SHIFT ONLY THE MENU BUTTON (NOT THE WHOLE HEADER)
+  ******************************************************/
   @media (min-width: 601px) {
     #sidebar.expanded ~ header .menu-btn {
       transform: translateX(260px);
@@ -129,11 +146,13 @@
     }
   }
   
-  /* MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED */
+  /******************************************************
+    MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED
+  ******************************************************/
   @media (min-width: 601px) {
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer {
-      margin-left: 260px;
+      margin-left: 260px; /* same offset as the sidebar width */
     }
     #sidebar.collapsed ~ main,
     #sidebar.collapsed ~ footer {
@@ -142,12 +161,12 @@
   }
   
   /******************************************************
-    HERO SECTION
+    HERO SECTION: BACKGROUND = LUGU LAKE PHOTO
   ******************************************************/
   .hero {
     position: relative;
     width: 100%;
-    min-height: 50vh; /* default for desktop - can adjust */
+    min-height: 50vh; /* Larger screens: 50vh */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,31 +175,37 @@
     border-radius: 0;
     margin: 0;
     margin-top: 70px; /* So it sits below your fixed header */
-  
+    
     background: 
-      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), /* Dark overlay gradient */
       url("./images/myphoto.jpg") center/cover no-repeat;
   }
+  
   .hero-overlay {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     background-color: rgba(0,0,0,0.3);
-    pointer-events: none;
+    pointer-events: none; /* Clicks pass through */
   }
+  
   .hero-content {
     position: relative;
     color: #fff;
-    max-width: 700px;
-    margin: 0 1rem;
+    max-width: 700px;  /* Constrain text width */
+    margin: 0 1rem;    /* Some side padding for mobile */
   }
+  
   .hero-content h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
   }
+  
   .hero-subtext {
     font-size: 1.2rem;
     margin-bottom: 2rem;
   }
+  
+  /* Hero Button styling */
   .hero-cta {
     background-color: #f6d743;
     color: #333;
@@ -273,7 +298,7 @@
     object-fit: cover;
   }
   
-  /* Buttons */
+  /* Buttons (general) */
   button {
     background-color: #0275d8;
     color: #fff;
@@ -317,7 +342,7 @@
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
-    line-height: 26px;
+    line-height: 26px; 
   }
   .switch-container {
     width: 50px;
@@ -457,28 +482,28 @@
     background-color: #666;
   }
   .lightbox-arrow {
-    position: fixed;
+    position: fixed; 
     top: 50%;
     transform: translateY(-50%);
     color: #fff;
-    font-size: 3.5rem;
+    font-size: 3.5rem; 
     cursor: pointer;
     user-select: none;
-    padding: 0.5rem;
-    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem; 
+    background: rgba(0, 0, 0, 0.3); 
     border-radius: 50%;
     z-index: 3100;
   }
   .lightbox-arrow.left {
-    left: 20px;
+    left: 20px; 
   }
   .lightbox-arrow.right {
     right: 20px;
   }
   .lightbox-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 10px; 
+    right: 10px; 
     color: #fff;
     font-size: 2rem;
     cursor: pointer;
@@ -486,14 +511,14 @@
   }
   
   /* ===== 9) DESKTOP (≥601px) ===== */
-  /* No special changes needed beyond what's above */
+  /* (We already used the media queries above for shifting the sidebar/menu, etc.) */
   
   /* ===== 10) SMARTPHONE (≤600px) ===== */
   @media (max-width: 600px) {
-    /* Header smaller */
+    /* 1) Smaller header */
     header {
       height: 50px;
-      z-index: 100;
+      z-index: 100; /* lower than lightbox */
     }
     header h1 {
       font-size: 1rem;
@@ -502,12 +527,13 @@
       text-overflow: ellipsis;
     }
     main {
-      margin-top: 50px;
+      margin-top: 50px; /* because header is 50px tall on mobile */
     }
-    /* Sidebar shrinks in mobile */
+  
+    /* 2) Sidebar is narrower on mobile */
     #sidebar {
       top: 50px;
-      width: 160px;
+      width: 160px; /* smaller fixed width for content */
       padding: 0.5rem;
       z-index: 3000;
       transform: translateX(-100%);
@@ -519,7 +545,7 @@
     #sidebar.collapsed {
       transform: translateX(-100%);
     }
-    /* Ensure main/footer not moved by sidebar on mobile */
+    /* Ensure main content doesn't shift on mobile, so override margin-left. */
     #sidebar.expanded ~ header,
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer,
@@ -528,17 +554,31 @@
     #sidebar.collapsed ~ footer {
       margin-left: 0 !important;
     }
-    /* Hero smaller on mobile */
+  
+    /* 3) Hero is smaller on mobile: e.g., 30vh instead of 50vh */
     .hero {
-      min-height: 30vh; /* Instead of 50vh */
+      min-height: 30vh;
     }
-    /* Timeline left space narrower */
+    .hero-content h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .hero-subtext {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    /* 4) Narrow the timeline left padding/line offset */
     .timeline::before {
       left: 20px; /* was 40px */
     }
     .timeline-item {
       padding-left: 60px; /* was 80px */
     }
+    .timeline-item::before {
+      left: 11px; /* was 31px, keep it center of the line */
+    }
+  
     .lightbox-arrow.left {
       left: -30px;
     }
@@ -548,12 +588,6 @@
     #lightboxImg {
       max-width: 85vw;
       max-height: 80vh;
-    }
-  }
-  /* Adjust grid layout on very small screens */
-  @media (max-width: 600px) {
-    .photo-gallery.grid-layout {
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
   }
   
@@ -575,7 +609,7 @@
     border: none;
     border-radius: 4px;
     user-select: none;
-    list-style: none;
+    list-style: none; 
     transition: background 0.3s ease;
   }
   .hidden-contact summary:hover {
@@ -591,7 +625,7 @@
     transition: max-height 0.5s ease, opacity 0.5s ease;
   }
   .hidden-contact[open] .hidden-contact-content {
-    max-height: 200px;
+    max-height: 200px; 
     opacity: 1;
   }
   .hidden-contact-content p {
