@@ -31,10 +31,11 @@
     <div class="sidebar-content">
       <nav>
         <ul>
-          <li><a href="#about">About Me</a></li>
-          <li><a href="#project-experience">My Project Experience</a></li>
-          <li><a href="#random-dog">Random Dog</a></li>
-          <li><a href="#photography">Photography</a></li>
+          <li><a href="#about" class="nav-link">About Me</a></li>
+          <li><a href="#project-experience" class="nav-link">My Project Experience</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#random-dog" class="nav-link">Random Dog</a></li>
+          <li><a href="#photography" class="nav-link">Photography</a></li>
         </ul>
       </nav>
       <div class="color-picker-section">
@@ -55,7 +56,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <!-- Optional "typewriter" or static headline -->
-      <h2 id="heroTypewriter">Hello, I’m Yize Lu, a front-end developer in training…</h2>
+      <h2 id="heroTypewriter">Hello, I'm Yize Lu, a front-end developer in training…</h2>
       <p class="hero-subtext">Welcome to my space.</p>
       <button class="hero-cta" id="heroCtaBtn">Explore</button>
     </div>
@@ -63,7 +64,7 @@
   
   <main>
     <!-- About Me -->
-    <section id="about">
+    <section id="about" class="section-container">
       <article>
         <h2>About Me</h2>
         <p>
@@ -107,7 +108,7 @@
     </section>
 
     <!-- My Project Experience -->
-    <section id="project-experience">
+    <section id="project-experience" class="section-container">
       <h2>My Project Experience</h2>
       <!-- TIMELINE CONTAINER -->
       <div class="timeline">
@@ -175,8 +176,111 @@
       </div> <!-- End .timeline -->
     </section>
 
+    <!-- Skills Section - NEW -->
+    <section id="skills" class="section-container">
+      <h2>Skills & Technologies</h2>
+      
+      <div class="skills-container">
+        <div class="skills-category">
+          <h3>Coding Languages</h3>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-name">Python</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">JavaScript</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">HTML/CSS</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 88%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">Java</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">SQL</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 80%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">R</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 75%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name">XML</div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="skills-category">
+          <h3>Frameworks & Libraries</h3>
+          <div class="skills-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Drizzle ORM</span>
+            <span class="skill-tag">Zod</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Sentry</span>
+          </div>
+        </div>
+        
+        <div class="skills-category">
+          <h3>Machine Learning & Data Science</h3>
+          <div class="skills-tags">
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">NLP</span>
+            <span class="skill-tag">PySpark</span>
+            <span class="skill-tag">SciKit-Learn</span>
+            <span class="skill-tag">Transformers</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">Numpy</span>
+            <span class="skill-tag">Regression</span>
+            <span class="skill-tag">Classification</span>
+          </div>
+        </div>
+        
+        <div class="skills-category">
+          <h3>Design & Tools</h3>
+          <div class="skills-tags">
+            <span class="skill-tag">Android Studio</span>
+            <span class="skill-tag">ECharts</span>
+            <span class="skill-tag">Arc GIS</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Latex</span>
+            <span class="skill-tag">Adobe Photoshop</span>
+            <span class="skill-tag">Illustrator</span>
+            <span class="skill-tag">InDesign</span>
+            <span class="skill-tag">Sketchup</span>
+            <span class="skill-tag">Auto CAD</span>
+            <span class="skill-tag">Excel</span>
+            <span class="skill-tag">PowerPoint</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Random Dog -->
-    <section id="random-dog">
+    <section id="random-dog" class="section-container">
       <h2>Random Dog Image</h2>
       <p>When life gets ruff, take a break and enjoy some awesome dog photos – because I really love dogs!</p>
       <img id="dogImage" src="" alt="A random dog will appear here!" />
@@ -184,10 +288,10 @@
     </section>
 
     <!-- Photography -->
-    <section id="photography">
+    <section id="photography" class="section-container">
       <h2>My Photography Albums</h2>
       <p>
-        I have a passion for photography in New York City and across the US and China. My filming equipment includes a DJI Air3 drone and a Xiaomi 13 Ultra phone with a Leica Vario-Summicron camera. Welcome to follow my RedNote, Bilibili, and Instagram accounts where I’ll post videos and photos!
+        I have a passion for photography in New York City and across the US and China. My filming equipment includes a DJI Air3 drone and a Xiaomi 13 Ultra phone with a Leica Vario-Summicron camera. Welcome to follow my RedNote, Bilibili, and Instagram accounts where I'll post videos and photos!
       </p>
       <div class="grid-mode-row">
         <label for="galleryToggle" class="grid-mode-label">Grid Mode</label>
@@ -238,6 +342,13 @@
       <span id="lightboxNext" class="lightbox-arrow right">⟩</span>
     </div>
   </div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path fill="currentColor" d="M12 4l8 8h-6v8h-4v-8H4z"/>
+    </svg>
+  </button>
 
   <script src="script.js"></script>
 </body>

@@ -6,6 +6,13 @@
     margin: 0;
     padding: 0;
     height: 100%;
+    /* 5) Prevent horizontal gap or overflow */
+    overflow-x: hidden;
+  }
+  /* 1) Fix anchor offset for the header (70px) */
+  html {
+    scroll-padding-top: 70px;
+    scroll-behavior: smooth; /* Enable smooth scrolling for all anchor links */
   }
   body {
     background-color: red;
@@ -16,27 +23,11 @@
     flex-direction: column;
     transition: background-color 0.2s ease;
   }
-  
-  /* 
-     --- SCROLL OFFSET FOR HEADER ---
-     This ensures that when we jump to an anchor (#about, #project-experience, etc.), 
-     the top is offset by 70px so the header won't block it.
-  */
-  section {
-    scroll-margin-top: 70px; /* the header’s height */
-  }
-  @media (max-width: 600px) {
-    section {
-      scroll-margin-top: 50px; /* if header is 50px tall on mobile */
-    }
-  }
-  
   main {
     flex: 1;
     margin-top: 70px; /* offset for the header (desktop) */
   }
-  
-  /* ===== 2) SIDEBAR (Desktop) ===== */
+  /* ===== 2) SIDEBAR ===== */
   #sidebar {
     position: fixed;
     top: 0;
@@ -46,25 +37,21 @@
     background-color: #000;
     color: #fff;
     overflow: hidden;
-    transition: transform 0.3s ease;
-    z-index: 3000;  /* Higher than header's 2000, so it appears on top */
+    transition: transform 0.3s ease; /* Simple, clean transition */
+    z-index: 3000; /* so it goes above the header when expanded */
   }
-  
   #sidebar.expanded {
     transform: translateX(0);
   }
-  
   #sidebar.collapsed {
-    transform: translateX(-260px);  /* Entire sidebar slides off-screen */
+    transform: translateX(-260px);
   }
-  
   .sidebar-content {
     display: flex;
     flex-direction: column;
     height: 100%;
     padding: 1rem;
   }
-  
   nav ul {
     list-style: none;
     margin: 1rem 0;
@@ -77,9 +64,33 @@
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
   nav a:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+  
+  /* Active menu item styles */
+  nav a.active {
+    background-color: #0275d8;
+    color: white;
+    position: relative;
+  }
+  
+  nav a.active::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: white;
   }
   
   .color-picker-section {
@@ -91,7 +102,6 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
   /* ===== 3) HEADER (FIXED) ===== */
   header {
     position: fixed;
@@ -105,10 +115,8 @@
     align-items: center;
     padding: 0 1rem;
     box-sizing: border-box;
-    z-index: 2000; /* Lower than sidebar (3000) so the sidebar overlays it */
+    z-index: 2000; /* so the sidebar (3000) can overlay it */
   }
-  
-  /* Menu button: will move horizontally when sidebar is expanded/collapsed */
   .menu-btn {
     background: transparent;
     color: #fff;
@@ -118,25 +126,20 @@
     margin-right: 1rem;
     outline: none;
     transition: 
-      transform 0.3s ease,  /* So it slides smoothly */
+      transform 0.3s ease, /* so the button slides smoothly */
       background 0.2s ease;
   }
   .menu-btn:hover,
   .menu-btn:active {
-    background-color: #0275d8; /* Blue background on hover/active */
+    background-color: #0275d8;
   }
-  
-  /* Center the H1 text in the header horizontally */
   header h1 {
     margin: 0 auto;
     text-align: center;
     max-width: 90%;
     overflow-wrap: break-word;
   }
-  
-  /******************************************************
-    SHIFT ONLY THE MENU BUTTON (NOT THE WHOLE HEADER)
-  ******************************************************/
+  /* SHIFT ONLY THE MENU BUTTON (NOT THE WHOLE HEADER) */
   @media (min-width: 601px) {
     #sidebar.expanded ~ header .menu-btn {
       transform: translateX(260px);
@@ -145,28 +148,22 @@
       transform: translateX(0);
     }
   }
-  
-  /******************************************************
-    MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED
-  ******************************************************/
+  /* MAIN & FOOTER SHIFT WHEN SIDEBAR EXPANDED (DESKTOP) */
   @media (min-width: 601px) {
     #sidebar.expanded ~ main,
     #sidebar.expanded ~ footer {
-      margin-left: 260px; /* same offset as the sidebar width */
+      margin-left: 260px;
     }
     #sidebar.collapsed ~ main,
     #sidebar.collapsed ~ footer {
       margin-left: 0;
     }
   }
-  
-  /******************************************************
-    HERO SECTION: BACKGROUND = LUGU LAKE PHOTO
-  ******************************************************/
+  /* ===== HERO SECTION ===== */
   .hero {
     position: relative;
     width: 100%;
-    min-height: 50vh; /* Larger screens: 50vh */
+    min-height: 50vh; /* default on desktop */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,38 +171,31 @@
     overflow: hidden;
     border-radius: 0;
     margin: 0;
-    margin-top: 70px; /* So it sits below your fixed header */
-    
-    background: 
-      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), /* Dark overlay gradient */
+    margin-top: 70px; /* below the header */
+    background:
+      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
       url("./images/myphoto.jpg") center/cover no-repeat;
   }
-  
   .hero-overlay {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     background-color: rgba(0,0,0,0.3);
-    pointer-events: none; /* Clicks pass through */
+    pointer-events: none;
   }
-  
   .hero-content {
     position: relative;
     color: #fff;
-    max-width: 700px;  /* Constrain text width */
-    margin: 0 1rem;    /* Some side padding for mobile */
+    max-width: 700px;
+    margin: 0 1rem;
   }
-  
   .hero-content h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
   }
-  
   .hero-subtext {
     font-size: 1.2rem;
     margin-bottom: 2rem;
   }
-  
-  /* Hero Button styling */
   .hero-cta {
     background-color: #f6d743;
     color: #333;
@@ -221,8 +211,7 @@
     transform: scale(1.05);
     background-color: #ecc637;
   }
-  
-  /* ===== 4) FOOTER ===== */
+  /* ===== FOOTER ===== */
   footer {
     background-color: #333;
     color: #aaa;
@@ -251,8 +240,7 @@
     height: 32px;
     margin-bottom: 0.5rem;
   }
-  
-  /* ===== 5) MAIN SECTIONS ===== */
+  /* ===== SECTIONS ===== */
   section {
     background-color: white;
     padding: 1.5rem;
@@ -260,6 +248,18 @@
     border-radius: 6px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
+  
+  /* Add indicator when section is active in viewport */
+  .section-container {
+    position: relative;
+    border-left: 4px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  
+  .section-container.active-section {
+    border-left: 4px solid #0275d8;
+  }
+  
   figure {
     margin: 0 0 1rem 0;
     text-align: center;
@@ -287,7 +287,6 @@
     cursor: pointer;
     font-weight: bold;
   }
-  
   /* Random Dog */
   #random-dog img {
     width: auto;
@@ -297,8 +296,7 @@
     margin: 0 auto 1rem;
     object-fit: cover;
   }
-  
-  /* Buttons (general) */
+  /* Buttons */
   button {
     background-color: #0275d8;
     color: #fff;
@@ -315,7 +313,6 @@
   button:focus {
     outline: none;
   }
-  
   /* Scroll-Reveal Effect for Sections */
   section {
     opacity: 0;
@@ -326,8 +323,7 @@
     opacity: 1;
     transform: translateY(0);
   }
-  
-  /* ===== 6) GRID MODE SWITCH ===== */
+  /* ===== GRID MODE SWITCH ===== */
   .grid-mode-row {
     display: flex;
     flex-direction: row;
@@ -342,7 +338,7 @@
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
-    line-height: 26px; 
+    line-height: 26px;
   }
   .switch-container {
     width: 50px;
@@ -385,11 +381,21 @@
   .switch-container input[type="checkbox"]:checked + .switch-label::after {
     transform: translateX(24px);
   }
-  
-  /* ===== 7) PHOTO GALLERY ===== */
+  /* ===== PHOTO GALLERY ===== */
   .photo-gallery {
     margin-top: 1rem;
   }
+  
+  /* Lazy loading styles */
+  .lazy-image {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+  
+  .lazy-image.loaded {
+    opacity: 1;
+  }
+  
   .single-row {
     display: flex;
     flex-direction: row;
@@ -418,8 +424,7 @@
     object-fit: cover;
     border-radius: 6px;
   }
-  
-  /* ===== 8) LIGHTBOX ===== */
+  /* ===== LIGHTBOX ===== */
   #lightbox {
     position: fixed;
     top: 0;
@@ -481,174 +486,36 @@
   .zoom-btn:hover {
     background-color: #666;
   }
+  /* Left/Right arrow buttons */
   .lightbox-arrow {
-    position: fixed; 
+    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     color: #fff;
-    font-size: 3.5rem; 
+    font-size: 3.5rem;
     cursor: pointer;
     user-select: none;
-    padding: 0.5rem; 
-    background: rgba(0, 0, 0, 0.3); 
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     z-index: 3100;
   }
   .lightbox-arrow.left {
-    left: 20px; 
+    left: 20px;
   }
   .lightbox-arrow.right {
     right: 20px;
   }
   .lightbox-close {
     position: absolute;
-    top: 10px; 
-    right: 10px; 
+    top: 10px;
+    right: 10px;
     color: #fff;
     font-size: 2rem;
     cursor: pointer;
     z-index: 3100;
   }
-  
-  /* ===== 9) DESKTOP (≥601px) ===== */
-  /* (We already used the media queries above for shifting the sidebar/menu, etc.) */
-  
-  /* ===== 10) SMARTPHONE (≤600px) ===== */
-  @media (max-width: 600px) {
-    /* 1) Smaller header */
-    header {
-      height: 50px;
-      z-index: 100; /* lower than lightbox */
-    }
-    header h1 {
-      font-size: 1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    main {
-      margin-top: 50px; /* because header is 50px tall on mobile */
-    }
-  
-    /* 2) Sidebar is narrower on mobile */
-    #sidebar {
-      top: 50px;
-      width: 160px; /* smaller fixed width for content */
-      padding: 0.5rem;
-      z-index: 3000;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-    #sidebar.expanded {
-      transform: translateX(0);
-    }
-    #sidebar.collapsed {
-      transform: translateX(-100%);
-    }
-    /* Ensure main content doesn't shift on mobile, so override margin-left. */
-    #sidebar.expanded ~ header,
-    #sidebar.expanded ~ main,
-    #sidebar.expanded ~ footer,
-    #sidebar.collapsed ~ header,
-    #sidebar.collapsed ~ main,
-    #sidebar.collapsed ~ footer {
-      margin-left: 0 !important;
-    }
-  
-    /* 3) Hero is smaller on mobile: e.g., 30vh instead of 50vh */
-    .hero {
-      min-height: 30vh;
-    }
-    .hero-content h2 {
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
-    }
-    .hero-subtext {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-    }
-  
-    /* 4) Narrow the timeline left padding/line offset */
-    .timeline::before {
-      left: 20px; /* was 40px */
-    }
-    .timeline-item {
-      padding-left: 60px; /* was 80px */
-    }
-    .timeline-item::before {
-      left: 11px; /* was 31px, keep it center of the line */
-    }
-  
-    .lightbox-arrow.left {
-      left: -30px;
-    }
-    .lightbox-arrow.right {
-      right: -30px;
-    }
-    #lightboxImg {
-      max-width: 85vw;
-      max-height: 80vh;
-    }
-  }
-  
-  /* Hidden Contact Section */
-  .hidden-contact {
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background-color: transparent;
-    margin-top: 1rem;
-    padding: 0.5rem;
-  }
-  .hidden-contact summary {
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0.6rem 1rem;
-    background: transparent;
-    color: inherit;
-    border: none;
-    border-radius: 4px;
-    user-select: none;
-    list-style: none; 
-    transition: background 0.3s ease;
-  }
-  .hidden-contact summary:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-  .hidden-contact summary::-webkit-details-marker {
-    display: none;
-  }
-  .hidden-contact-content {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
-  }
-  .hidden-contact[open] .hidden-contact-content {
-    max-height: 200px; 
-    opacity: 1;
-  }
-  .hidden-contact-content p {
-    margin: 0.5rem 0;
-  }
-  .contact-label {
-    font-weight: 600;
-    margin-right: 0.5rem;
-    color: #333;
-  }
-  .contact-info {
-    font-style: italic;
-    color: #555;
-  }
-  .hidden-contact-content a {
-    color: #0275d8;
-    text-decoration: none;
-  }
-  .hidden-contact-content a:hover {
-    text-decoration: underline;
-  }
-  
-  /* === TIMELINE CONTAINER === */
+  /* ===== TIMELINE ===== */
   .timeline {
     position: relative;
     margin: 2rem 0;
@@ -667,7 +534,7 @@
     position: relative;
     margin: 2rem 0;
     padding-left: 80px;
-    opacity: 0;
+    opacity: 0; /* for scroll reveal */
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
@@ -675,7 +542,7 @@
     content: "";
     position: absolute;
     left: 31px;
-    background-color: #0275d8; 
+    background-color: #0275d8;
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -719,3 +586,282 @@
     display: none;
   }
   
+  /* Back to Top Button */
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0275d8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s, background-color 0.3s;
+    z-index: 2500;
+    padding: 0;
+    border: none;
+  }
+  
+  .back-to-top svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .back-to-top:hover {
+    background-color: #025aa5;
+    transform: translateY(0) scale(1.1);
+  }
+  
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      transition: opacity 0.1s, visibility 0.1s, background-color 0.1s;
+    }
+  }
+  
+  /* ===== SKILLS SECTION STYLES - NEW ===== */
+  .skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .skills-category {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .skills-category h3 {
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    color: #0275d8;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Progress bar styles */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+  }
+  
+  .skill-item {
+    margin-bottom: 0.8rem;
+  }
+  
+  .skill-name {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  
+  .skill-bar-container {
+    height: 12px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .skill-bar {
+    height: 100%;
+    background-color: #0275d8;
+    border-radius: 6px;
+    transition: width 1.5s ease-in-out;
+  }
+  
+  /* Tag styles */
+  .skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  
+  .skill-tag {
+    background-color: #e9ecef;
+    color: #495057;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .skill-tag:hover {
+    background-color: #0275d8;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(2, 117, 216, 0.2);
+  }
+  
+  /* =======================
+  3) MOBILE QUERIES
+  ======================= */
+  @media (max-width: 600px) {
+    /* 2) Default header size on phone */
+    header {
+      height: 50px;
+      z-index: 100; /* lower than lightbox, but sidebar is 3000 */
+    }
+    header h1 {
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    main {
+      margin-top: 50px;
+    }
+    /* 3) Hero smaller on phone */
+    .hero {
+      min-height: 30vh; /* from 50vh down to 30vh */
+    }
+    .hero-content h2 {
+      font-size: 1.4rem; /* smaller text */
+    }
+    .hero-subtext {
+      font-size: 1rem;
+    }
+    /* 4) Narrow timeline on phone */
+    .timeline::before {
+      left: 20px; /* narrower left offset */
+    }
+    .timeline-item {
+      margin: 1.5rem 0;
+      padding-left: 40px; /* reduce from 80 to 40 */
+    }
+    .timeline-item::before {
+      left: 11px; /* matches half the timeline::before offset minus radius */
+    }
+    /* Sidebar shrinks in mobile, folded by default */
+    #sidebar {
+      top: 50px;
+      width: 160px;
+      padding: 0.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    #sidebar.expanded {
+      transform: translateX(0);
+    }
+    #sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+    /* Force no margin shift in mobile to keep layout simpler */
+    #sidebar.expanded ~ header,
+    #sidebar.expanded ~ main,
+    #sidebar.expanded ~ footer,
+    #sidebar.collapsed ~ header,
+    #sidebar.collapsed ~ main,
+    #sidebar.collapsed ~ footer {
+      margin-left: 0 !important;
+    }
+    /* Lightbox arrow positions on phone */
+    .lightbox-arrow.left {
+      left: -30px;
+    }
+    .lightbox-arrow.right {
+      right: -30px;
+    }
+    #lightboxImg {
+      max-width: 85vw;
+      max-height: 80vh;
+    }
+    /* Photo gallery grid on phone */
+    .photo-gallery.grid-layout {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    /* Adjust back to top button size and position for mobile */
+    .back-to-top {
+      width: 40px;
+      height: 40px;
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .back-to-top svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    /* Skills section mobile adjustments */
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .skill-tag {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+  }
+  /* Hidden Contact Section */
+  .hidden-contact {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: transparent;
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+  .hidden-contact summary {
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+    background: transparent;
+    color: inherit;
+    border: none;
+    border-radius: 4px;
+    user-select: none;
+    list-style: none;
+    transition: background 0.3s ease;
+  }
+  .hidden-contact summary:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .hidden-contact summary::-webkit-details-marker {
+    display: none;
+  }
+  .hidden-contact-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+  .hidden-contact[open] .hidden-contact-content {
+    max-height: 200px;
+    opacity: 1;
+  }
+  .hidden-contact-content p {
+    margin: 0.5rem 0;
+  }
+  .contact-label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #333;
+  }
+  .contact-info {
+    font-style: italic;
+    color: #555;
+  }
+  .hidden-contact-content a {
+    color: #0275d8;
+    text-decoration: none;
+  }
+  .hidden-contact-content a:hover {
+    text-decoration: underline;
+  }
