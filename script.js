@@ -354,7 +354,7 @@ if (heroCtaBtn) {
  **********************************************/
 const heroTypewriterEl = document.getElementById("heroTypewriter");
 if (heroTypewriterEl) {
-  const heroText = "Hello, I’m Yize Lu, a front-end developer in training…";
+  const heroText = "Hello, I’m Yize Lu, a full-stack developer in training…";
   let idx = 0;
 
   function typeChar() {
