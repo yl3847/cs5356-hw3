@@ -22,6 +22,7 @@
     margin-top: 70px; /* offset for the header (desktop) */
   }
   
+  
   /* ===== 2) SIDEBAR (Desktop) ===== */
   #sidebar {
     position: fixed;
@@ -115,6 +116,101 @@
     max-width: 90%;
     overflow-wrap: break-word;
   }
+  
+  /******************************************************
+  2) HERO SECTION: BACKGROUND = LUGU LAKE PHOTO 
+******************************************************/
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 50vh; /* Adjust as desired */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 0;
+    margin: 0;
+    margin-top: 70px; /* So it sits *below* your fixed header */
+    /* The key: use your Lugu Lake photo as background. Adjust path as needed. */
+    background: 
+      linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), /* Dark overlay gradient */
+      url("./images/myphoto.jpg") center/cover no-repeat;
+  }
+  
+  
+  .hero-overlay {
+    /* We can still have an additional overlay or pattern. 
+       If you prefer just the dark gradient above, remove this. */
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0,0,0,0.3);
+    pointer-events: none; /* Clicks pass through */
+  }
+  
+  .hero-content {
+    position: relative;
+    color: #fff;
+    max-width: 700px;  /* Constrain text width */
+    margin: 0 1rem;    /* Some side padding for mobile */
+  }
+  
+  .hero-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtext {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Hero Button styling */
+  .hero-cta {
+    background-color: #f6d743;
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .hero-cta:hover {
+    transform: scale(1.05);
+    background-color: #ecc637;
+  }
+  
+  /******************************************************
+    3) ENSURE HERO SHIFTS WHEN SIDEBAR EXPANDED
+  ******************************************************/
+  /* You already have code like this for main, header, and footer.
+     Just *add* .hero in the same sets of rules. */
+  
+  @media (min-width: 601px) {
+    
+   
+    #sidebar.expanded ~ main,
+    #sidebar.expanded ~ footer {
+      margin-left: 260px; /* same offset as your sidebar width */
+    }
+    
+    
+    #sidebar.collapsed ~ main,
+    #sidebar.collapsed ~ footer {
+      margin-left: 0;
+    }
+  }
+  
+  
+  
+  /******************************************************
+    4) OPTIONAL TYPEWRITER = Already in your script? 
+       Or just keep a static h2 if you prefer.
+  ******************************************************/
+
+  
   
   /* ===== 4) FOOTER ===== */
   footer {
@@ -558,5 +654,91 @@
   }
   
   
+/* === TIMELINE CONTAINER === */
+.timeline {
+    position: relative;
+    margin: 2rem 0;
+    padding: 2rem 0;
+  }
+  
+  /* Vertical line running through the timeline */
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 40px; /* Adjust horizontal position of line */
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: #ccc;
+  }
+  
+  /* === TIMELINE ITEMS === */
+  .timeline-item {
+    position: relative;
+    margin: 2rem 0;
+    padding-left: 80px; /* So text doesn't overlap the timeline line */
+    opacity: 0;         /* For scroll animation; we'll reveal it later */
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  /* Little circle “node” on the line */
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 31px;         /* Center on the line (which is at 40px) */
+    background-color: #0275d8; 
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    top: 0; /* align with top of timeline-item content */
+  }
+  
+  /* Add “slide-in” direction variants for more interesting motion */
+  .slide-in-left {
+    transform: translateX(-50px);
+  }
+  .slide-in-right {
+    transform: translateX(50px);
+  }
+  
+  /* When the .reveal class is added (via Intersection Observer), item slides into place */
+  .timeline-item.reveal {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  
+  /* === TIMELINE DATE STYLING === */
+  .timeline-date {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* === TIMELINE CONTENT === */
+  .timeline-content h3 {
+    margin: 0.3rem 0;
+    font-size: 1.2rem;
+  }
+  .timeline-content p {
+    margin: 0.5rem 0 1rem;
+  }
+  
+  /* === DETAILS TOGGLE === */
+  .toggle-details {
+    display: inline-block;
+    background-color: #0275d8;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .project-details.hidden {
+    display: none;
+  }
   
   

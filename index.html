@@ -41,23 +41,38 @@
       </div>
     </div>
   </aside>
-
+  
+  
   <!-- ===== FIXED HEADER ===== -->
   <header>
     <button id="menuBtn" class="menu-btn">☰</button>
     <h1>Welcome to Yize Lu's Homepage</h1>
   </header>
-
+  
+  <!-- ===== HERO SECTION ===== -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <!-- Optional "typewriter" or static headline -->
+      <h2 id="heroTypewriter">Hello, I’m Yize Lu, a front-end developer in training…</h2>
+      <p class="hero-subtext">Welcome to my space on the web.</p>
+      <button class="hero-cta" id="heroCtaBtn">Explore</button>
+    </div>
+  </section>
+  
+  
   <main>
     <!-- About Me -->
     <section id="about">
-      <figure>
+      <!-- Remove this entire block: 
+    <figure>
         <img src="./images/myphoto.jpg" alt="My photo" />
-        <figcaption>Me, in Lugu Lake, Yunnan, China, in Feb, 2024</figcaption>
-      </figure>
+        <figcaption>Me, in Lugu Lake...</figcaption>
+    </figure>
+    -->
       <article>
         <h2>About Me</h2>
-        <p>Hello! I'm Yize Lu, a front-end developer in training.</p>
+        <p>Hello! I'm Yize Lu, a full-stack developer in training.</p>
         <p>
           I am currently pursuing a Master of Information Science at Cornell University with a focus on Machine Learning and Natural Language Processing. With hands-on experience in both front-end and back-end development, I enjoy tackling real-world challenges through innovative projects.
         </p>
@@ -94,6 +109,7 @@
       
       
       
+      
       <dialog id="cityDialog">
         <p>This is an example of the <dialog> element!</p>
         <button id="closeDialogBtn">Close</button>
@@ -102,40 +118,91 @@
 
     <!-- My Project Experience -->
     <section id="project-experience">
-      <h2>My Project Experience</h2>
-      <article>
-        <h3>Natural Language Processing Project: Sentiment Analysis & Text Classification</h3>
-        <p><strong>Cornell University NLP Project, NYC</strong> | Feb 2025 - Mar 2025</p>
-        <ul>
-          <li>Developed and implemented a Perceptron model and Multilayer Perceptron (MLP) for text classification tasks, specifically Sentiment Analysis (SST-2) and Newsgroup Classification.</li>
-          <li>Preprocessed data and engineered features using Bag of Words (BoW), n-grams, and custom features (negation, intensifiers).</li>
-          <li>Implemented Perceptron from scratch, utilizing a linear classification approach with feature-based weight updates.</li>
-          <li>Designed and trained an MLP model using PyTorch, including embedding layers, hidden layers with various activation functions (ReLU, Sigmoid, Tanh, Leaky-ReLU), and dropout for regularization.</li>
-          <li>Optimized model performance through hyperparameter tuning, batching, and margin-based updates.</li>
-          <li>Conducted error analysis to identify and address model misclassifications, focusing on issues like negation, sarcasm, and ambiguous context. Benchmarked model performance with different batch sizes.</li>
-        </ul>
-      </article>
-      <article>
-        <h3>Sentiment Analysis with Semi-Supervised Learning on Text Data</h3>
-        <p><strong>Cornell University Machine Learning Project, NYC</strong> | Oct 2024 - Nov 2024</p>
-        <ul>
-          <li>Implemented advanced semi-supervised learning techniques (DBSCAN, Label Spreading, and Self-Training) to augment 60% unlabeled data, increasing model training data volume by 2.5x.</li>
-          <li>Designed and compared supervised classifiers (MultinomialNB, SGDClassifier, Random Forest, XGBoost, LightGBM) to achieve a test accuracy of 95.4% using a Voting Classifier ensemble model.</li>
-          <li>Utilized TF-IDF vectorization with n-grams and optimized data dimensionality (top 5000 features) to capture rich textual context while reducing overfitting risk.</li>
-          <li>Applied clustering methods (DBSCAN, K-Means, Gaussian Mixture Models) with Python libraries like scikit-learn and NLTK, achieving the best performance with DBSCAN for labeling noisy and high-dimensional text data.</li>
-        </ul>
-      </article>
-      <article>
-        <h3>Analyzing the Impact of Air Quality on Health Outcomes Using Machine Learning</h3>
-        <p><strong>Zhejiang University Design and Research Institute, Urban Science and Analytic Intern, Hangzhou, China</strong> | June 2022 - Aug 2022</p>
-        
-        <ul>
-          <li>Integrated multi-source datasets (O3, PM2.5, COPD, Asthma, Household Income) for 10 years, conducted feature engineering and outlier detection using z-scores, ensuring clean, high-quality inputs for downstream analysis. Normalized data with StandardScaler for clustering and regression tasks.</li>
-          <li>Applied K-Means and HDBSCAN clustering algorithms to identify patterns in air pollution and respiratory health outcomes, reducing feature dimensions with PCA for effective visualization.</li>
-          <li>Performed SHAP analysis to interpret model outputs, revealing that PM2.5 was the dominant predictor for asthma rates while household income exhibited a mitigating effect.</li>
-        </ul>
-      </article>
-    </section>
+        <h2>My Project Experience</h2>
+      
+        <!-- TIMELINE CONTAINER -->
+        <div class="timeline">
+      
+          <!-- TIMELINE ITEM 1 -->
+          <div class="timeline-item slide-in-left">
+            <span class="timeline-date">Feb 2025 - Mar 2025</span>
+            <div class="timeline-content">
+              <h3>Natural Language Processing Project:<br>Sentiment Analysis & Text Classification</h3>
+              <p><strong>Cornell University NLP Project, NYC</strong></p>
+              
+              <!-- Brief teaser or summary -->
+              <p>
+                Developed Perceptron & MLP models for sentiment analysis (SST-2) and text classification, 
+                engineered features like BoW & n-grams, and optimized performance with advanced techniques.
+              </p>
+      
+              <!-- Toggle button + hidden details -->
+              <button class="toggle-details">Read More</button>
+              <div class="project-details hidden">
+                <ul>
+                  <li>Implemented Perceptron from scratch with linear classification.</li>
+                  <li>Trained MLP model in PyTorch (embedding layers, dropout, ReLU, etc.).</li>
+                  <li>Optimized via hyperparameter tuning, margin-based updates, and mini-batching.</li>
+                  <li>Conducted error analysis on negation, sarcasm, ambiguous context.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      
+          <!-- TIMELINE ITEM 2 -->
+          <div class="timeline-item slide-in-right">
+            <span class="timeline-date">Oct 2024 - Nov 2024</span>
+            <div class="timeline-content">
+              <h3>Sentiment Analysis with Semi-Supervised Learning on Text Data</h3>
+              <p><strong>Cornell University Machine Learning Project, NYC</strong></p>
+              
+              <!-- Brief teaser or summary -->
+              <p>
+                Harnessed DBSCAN, Label Spreading, and Self-Training to label ~60% unlabeled data, 
+                boosting training size 2.5x and achieving 95.4% accuracy.
+              </p>
+      
+              <!-- Toggle button + hidden details -->
+              <button class="toggle-details">Read More</button>
+              <div class="project-details hidden">
+                <ul>
+                  <li>Compared multiple supervised classifiers (MultinomialNB, SGD, RF, XGBoost).</li>
+                  <li>Engineered features using TF-IDF, n-grams, and dimension-reduction (top 5000 features).</li>
+                  <li>Voted ensemble achieved 95.4% on test, with DBSCAN best for noisy text data labeling.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      
+          <!-- TIMELINE ITEM 3 -->
+          <div class="timeline-item slide-in-left">
+            <span class="timeline-date">June 2022 - Aug 2022</span>
+            <div class="timeline-content">
+              <h3>Analyzing the Impact of Air Quality on Health Outcomes Using ML</h3>
+              <p><strong>Zhejiang University Design & Research Institute, Hangzhou, China</strong></p>
+              
+              <!-- Brief teaser or summary -->
+              <p>
+                Integrated multi-source O3 & PM2.5 datasets with COPD & Asthma data, applied 
+                K-Means/HDBSCAN, and built regression models to reveal PM2.5 as the main predictor.
+              </p>
+      
+              <!-- Toggle button + hidden details -->
+              <button class="toggle-details">Read More</button>
+              <div class="project-details hidden">
+                <ul>
+                  <li>Cleaned & normalized 10-year data using z-scores and PCA for dimension reduction.</li>
+                  <li>Used HDBSCAN to cluster pollution & respiratory health outcomes in high-dimensional space.</li>
+                  <li>SHAP analysis: PM2.5 was the primary driver of asthma rates, with income mitigating effects.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      
+        </div> <!-- End .timeline -->
+      
+      </section>
+      
 
     <!-- Random Dog -->
     <section id="random-dog">

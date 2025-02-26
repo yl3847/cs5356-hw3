@@ -290,3 +290,81 @@ setInterval(function() {
     }
   }, 50); // Runs every 50ms; adjust interval as needed.
   
+
+  
+/*******************************************************
+ * TOGGLE "READ MORE" DETAILS
+ *******************************************************/
+document.querySelectorAll('.toggle-details').forEach(button => {
+    button.addEventListener('click', () => {
+      const details = button.nextElementSibling; // The .project-details div
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        button.textContent = "Show Less";
+      } else {
+        details.classList.add('hidden');
+        button.textContent = "Read More";
+      }
+    });
+  });
+  
+/*******************************************************
+ * TIMELINE ITEMS REVEAL (Intersection Observer)
+ *******************************************************/
+document.addEventListener('DOMContentLoaded', function() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+  
+    const observerOptions = {
+      threshold: 0.2
+    };
+  
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add .reveal to trigger the CSS transition
+          entry.target.classList.add('reveal');
+        } else {
+          // Remove it if you want the animation to replay
+          // or keep it if you only want the animation once
+          entry.target.classList.remove('reveal');
+        }
+      });
+    }, observerOptions);
+  
+    timelineItems.forEach(item => {
+      observer.observe(item);
+    });
+  });
+
+/**********************************************
+ * HERO: Smooth Scroll to "About" 
+ **********************************************/
+const heroCtaBtn = document.getElementById("heroCtaBtn");
+if (heroCtaBtn) {
+  heroCtaBtn.addEventListener("click", () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+}
+
+/**********************************************
+ * OPTIONAL: Typewriter Effect for Hero H2
+ **********************************************/
+const heroTypewriterEl = document.getElementById("heroTypewriter");
+if (heroTypewriterEl) {
+  const heroText = "Hello, I’m Yize Lu, a front-end developer in training…";
+  let idx = 0;
+
+  function typeChar() {
+    heroTypewriterEl.textContent = heroText.slice(0, idx);
+    idx++;
+    if (idx <= heroText.length) {
+      setTimeout(typeChar, 50); // Speed of typing (milliseconds)
+    }
+  }
+
+  // Initialize if the element is on the page
+  typeChar();
+}
