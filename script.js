@@ -406,32 +406,65 @@ document.addEventListener('DOMContentLoaded', function() {
 * 10) SECTION REVEAL ANIMATION
 **/
 document.addEventListener("DOMContentLoaded", function() {
-  const sections = document.querySelectorAll("section");
-  const observerOptions = {
-    // Lower threshold so that on mobile the section is considered out of view sooner.
-    threshold: 0.05
-  };
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      // If it's the photography section and grid mode is active, always show it.
-      if (
-        entry.target.id === "photography" &&
-        document.getElementById("photoGallery").classList.contains("grid-layout")
-      ) {
-        entry.target.classList.add("reveal");
-      } else {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("reveal");
-        } else {
-          entry.target.classList.remove("reveal");
+    // First, check if we can find any sections
+    const sections = document.querySelectorAll("section");
+    
+    if (sections.length === 0) {
+        console.error("No sections found on the page. Scroll animations won't work.");
+        return; // Exit early if no sections exist
+    }
+    
+    // Enable animations only after verifying DOM is ready and sections exist
+    document.body.classList.add("js-enabled");
+    
+    const observerOptions = {
+        threshold: 0.15, // Show sections when they're 15% visible
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before sections enter viewport
+    };
+
+    // Check if IntersectionObserver is supported
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                // Special case for photography section
+                if (
+                    entry.target.id === "photography" && 
+                    document.getElementById("photoGallery") && 
+                    document.getElementById("photoGallery").classList.contains("grid-layout")
+                ) {
+                    entry.target.classList.add("reveal");
+                } else {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("reveal");
+                    } else {
+                        // Optional: comment this line if you want sections to stay visible once revealed
+                        entry.target.classList.remove("reveal");
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    } else {
+        // Fallback for browsers without IntersectionObserver support
+        console.warn("IntersectionObserver not supported. All sections will be visible.");
+        sections.forEach(section => {
+            section.classList.add("reveal");
+        });
+    }
+    
+    // Safety timeout - make all sections visible after 2 seconds if something goes wrong
+    setTimeout(function() {
+        const hiddenSections = document.querySelectorAll("section:not(.reveal)");
+        if (hiddenSections.length > 0) {
+            console.warn("Some sections weren't revealed. Forcing visibility...");
+            hiddenSections.forEach(section => section.classList.add("reveal"));
         }
-      }
-    });
-  }, observerOptions);
-  sections.forEach(section => {
-    observer.observe(section);
-  });
+    }, 2000);
 });
+
 
 // Auto-scroll photo gallery when in non-grid (single-row) mode
 setInterval(function() {
